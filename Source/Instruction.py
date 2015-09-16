@@ -16,3 +16,9 @@ class Instruction(object):
         
     def printIns(self):
         print(self.message)
+    
+    def getMessage(self):
+        return self.message
+    
+    def getKind(self):
+        return self.kind
