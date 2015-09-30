@@ -4,7 +4,7 @@ Created on 16 de set. de 2015
 @author: matutee
 '''
 
-from Interruption import IRQKind
+from Code.Interruption import IRQKind
 
 class KillHandler(object):
 

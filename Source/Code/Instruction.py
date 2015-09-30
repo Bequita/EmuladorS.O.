@@ -4,7 +4,7 @@ Created on 2 de set. de 2015
 @author: matutee
 '''
 
-class InstructionKind:
+class InstructionKind(object):
     IO = "IO"
     CPU = "CPU"
 

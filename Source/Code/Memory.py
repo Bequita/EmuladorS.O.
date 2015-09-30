@@ -10,20 +10,22 @@ class Memory(object):
         self.capacity = []
         self.lastPosition = 0
         
-    def loadInstructions(self, instructions, startPosition):
-        start = startPosition
+    def loadProgram(self, program):
+        self.loadInstructions(program.instructionsList)
+        
+    def loadInstructions(self, instructions):
         for item in instructions:
-            self.capacity.insert(start, item)
+            self.capacity.insert(self.lastPosition, item)
             self.lastPosition = self.lastPosition + 1
-            start = start + 1
 
     def fetchMem(self, position):
         return self.capacity[position]
     
     def cleanMemoryFromPointer(self, start, length):
-        while(start < length):
+        while(length > 0):
             self.capacity[start] = None
             start = start + 1
+            length = length - 1
             
     ## ESTE METODO DE MIERDA ESCRITO EN CASTELLANO LO DEJO PARA QUE VEAN QUE SE LIMPIA EL STACK DE MEMORIA
     def imprimirMemoria(self):
