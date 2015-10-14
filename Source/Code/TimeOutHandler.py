@@ -10,7 +10,7 @@ class TimeOutHandler(object):
 
     def canHandle(self, irqK):
         return irqK == IRQKind.TIMEOUT
-    
+
     def handle(self, irq):
+        # Hace mutex de QReady, y mete el pcb dentro de la cola
         print("ANDA EL TIMEOUT HANDLER")
-    
