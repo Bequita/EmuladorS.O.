@@ -1,4 +1,4 @@
-from Code.PCB import PCB
+from PCB import PCB
 
 class ProgramLoader(object):
 

@@ -4,7 +4,7 @@ Created on 16 de set. de 2015
 @author: matutee
 '''
 
-from Code.Interruption import IRQKind
+from Interruption import IRQKind
 
 class IOHandler(object):
 

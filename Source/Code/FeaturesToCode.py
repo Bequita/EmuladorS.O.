@@ -4,17 +4,17 @@ Created on 15 de set. de 2015
 @author: matutee
 '''
 
-from Code.Instruction import Instruction, InstructionKind
-from Code.Memory import Memory
-from Code.Program import Program
-from Code.ProgramLoader import ProgramLoader
-from Code.HardDisk import HardDisk
-from Code.ReadyQueue import ReadyQueue
-from Code.CPU import CPU
-from Code.InterruptionManager import InterruptionManager
-from Code.KillHandler import KillHandler
-from Code.IOQueue import IOQueue
-from Code.IOHandler import IOHandler
+from Instruction import Instruction, InstructionKind
+from Memory import Memory
+from Program import Program
+from ProgramLoader import ProgramLoader
+from HardDisk import HardDisk
+from ReadyQueue import ReadyQueue
+from CPU import CPU
+from InterruptionManager import InterruptionManager
+from KillHandler import KillHandler
+from IOQueue import IOQueue
+from IOHandler import IOHandler
 '''
 ******************* GUIA DE COSAS A IMPLEMENTAR ******************
 

@@ -1,6 +1,6 @@
 import unittest
 
-from Code.SetUpMixin import SetUpMixin
+from SetUpMixin import SetUpMixin
 
 class HardDiskTest(unittest.TestCase):
 

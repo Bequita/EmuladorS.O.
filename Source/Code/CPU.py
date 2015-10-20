@@ -11,10 +11,6 @@ class CPU(object):
     def asignPCB(self, pcb):
         self.pcbLoaded = pcb
 
-        if(currentInst.getKind() != InstructionKind.CPU):
-            kernel.handle(pcb)
-            self.pcbLoaded = None
-
     def execute(self):
         if(self.existsNextMemoryPosition(pcb)):
             currentInstruction = self.fetch(pcb)
@@ -23,7 +19,7 @@ class CPU(object):
             if(currentInstruction.getKind() == InstructionKind.CPU):
                 currentInstruction.printIns()
             elif(currentInstruction.getKind() == InstructionKind.IO):
-                self.i
+                self.interruptionManager.handle()
             else:
                 raise NameError('Instruccion desconocida')
 

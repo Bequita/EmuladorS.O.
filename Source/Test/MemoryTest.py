@@ -5,8 +5,8 @@ Created on 30 de set. de 2015
 '''
 import unittest
 
-from Code.SetUpMixin import SetUpMixin
-from Code.Instruction import InstructionKind
+from SetUpMixin import SetUpMixin
+from Instruction import InstructionKind
 
 class Test(unittest.TestCase):
 

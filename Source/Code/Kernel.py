@@ -1,11 +1,12 @@
-from Code.ProgramLoader import ProgramLoader
+from ProgramLoader import ProgramLoader
+from threading import Thread
 
 class Kernel(Thread):
 
     def __init__(self, prLoader, intManager):
         self.programLoader = prLoader
         self.interruptionManager = intManager
-        self.scheduler = sch
+        #self.scheduler = sch
 
     def loadProgramToPL(self, programName):
         self.programLoader.loadProgram(programName)
