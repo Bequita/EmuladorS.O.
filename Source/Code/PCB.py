@@ -6,8 +6,9 @@ Created on 1 de set. de 2015
 
 class PCB(object):
 
-    def __init__(self, bD, pS):
+    def __init__(self, bD, pS, prio):
         self.baseDirection = bD
         self.programCounter = 0
         self.programSize = pS
+        self.priority= prio
         
