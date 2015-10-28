@@ -1,5 +1,5 @@
-from Interruption import IRQ, IRQKind
-from Instruction import InstructionKind
+from Code.Interruption import IRQ, IRQKind
+from Code.Instruction import InstructionKind
 
 class CPU(object):
 
