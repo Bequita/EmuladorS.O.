@@ -7,6 +7,9 @@ class CPU(object):
         self.memory = mem
         self.interruptionManager = interrManager
         self.pcbLoaded = None
+        self.ticks= 4
+        self.counter=0
+        
 
     def asignPCB(self, pcb):
         self.pcbLoaded = pcb
