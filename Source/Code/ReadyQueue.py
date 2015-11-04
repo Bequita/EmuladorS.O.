@@ -15,3 +15,6 @@ class ReadyQueue:
 
     def getPcb(self):
         return self.pcbs.get
+    
+    
+

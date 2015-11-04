@@ -1,4 +1,4 @@
-from PCB import PCB
+from Code.PCB import PCB
 
 class ProgramLoader(object):
 
@@ -14,3 +14,4 @@ class ProgramLoader(object):
         self.memory.loadProgram(program)
         prPCB = PCB(self.memory.capacity.__len__() - programSize, programSize)
         self.readyQueue.addPcb(prPCB)
+        

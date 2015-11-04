@@ -7,6 +7,11 @@ from Code.Instruction import Instruction, InstructionKind
 from Code.Program import Program
 from Code.HardDisk import HardDisk
 from Code.Memory import Memory
+from Code.IOHandler import IOHandler
+from Code.KillHandler import KillHandler
+from Code.TimeOutHandler import TimeOutHandler
+from Code.InterruptionManager import InterruptionManager
+
 
 class SetUpMixin(object):
 
@@ -20,3 +25,13 @@ class SetUpMixin(object):
         self.prg = Program("PrimerPrograma", [self.ins1,self.IOins1,self.ins2,self.ins3,self.IOins2])
         self.hd = HardDisk()
         self.mem = Memory()
+        self.killHandler = KillHandler()
+        self.timeOutHandler = TimeOutHandler()
+        self.ioHandler = IOHandler
+        self.handlerList = []
+        self.handlerList.append(self.killHandler)
+        self.handlerList.append(self.timeOutHandler)
+        self.handlerList.append(self.ioHandler)
+        self.interruptionManager = InterruptionManager() 
+        #self.cpu = CPU(self.mem, self.interruptionManager)
+    
