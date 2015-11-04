@@ -1,6 +1,5 @@
 from Code.Interruption import IRQ, IRQKind
 from Code.Instruction import InstructionKind
-from Code.InterruptionManager import InterruptionManager
 
 class CPU(object):
 
@@ -10,6 +9,9 @@ class CPU(object):
         self.pcbLoaded = None
         self.context = "modeCPU"
         self.quantum = 0
+        self.ticks= 4
+        self.counter=0
+        
 
     def asignPCB(self, pcb, quantum): # quantum enviado desde scheduler
         self.pcbLoaded = pcb
