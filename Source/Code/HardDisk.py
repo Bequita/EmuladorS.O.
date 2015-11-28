@@ -12,8 +12,8 @@ class HardDisk(object):
     def addProgram(self, program):
         self.programList.append(program)
         
-    def getProgram(self, programName):
+    def getProgram(self, prName):
         for item in self.programList:
-            if item.programName == programName:
+            if item.programName == prName:
                 return item
             

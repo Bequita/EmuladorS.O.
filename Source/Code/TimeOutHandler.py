@@ -4,7 +4,7 @@ Created on 15 de set. de 2015
 @author: matutee
 '''
 
-from Interruption import IRQKind
+from Code.Interruption import IRQKind
 
 class TimeOutHandler(object):
 

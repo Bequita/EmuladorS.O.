@@ -3,12 +3,13 @@ from threading import Thread
 
 class Prueba(Thread):
     
-    def __init__(self):
+    def __init__(self, message):
         Thread.__init__(self)
+        self.mes = message
         
-    def run(self, message):
+    def run(self):
         while True:
-            print(message)
+            print(self.mes)
             sleep(1)
             
 thPrueba = Prueba("putazo")
