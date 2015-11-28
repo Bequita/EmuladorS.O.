@@ -15,6 +15,7 @@ class ReadyQueue:
     def getPcb(self):
         return self.pcbs.get
 '''
+
 class CeldaEnvejecimiento:
     def __init__(self):
         self.nivel1 = []

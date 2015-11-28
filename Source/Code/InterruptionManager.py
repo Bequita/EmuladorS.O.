@@ -8,7 +8,15 @@ class InterruptionManager(object):
 
     def __init__(self):
         self.handlersList = []
+        self.irqList = []
         
+    def addInterruption(self, interruption):
+        self.interruptionList.append(interruption)
+    
+    def executeInterruption(self):
+        for interruption in self.interruptionList:
+            self.handle(interruption)
+            
     def registerHandler(self, handler):
         self.handlersList.append(handler)
         

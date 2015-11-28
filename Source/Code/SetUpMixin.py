@@ -13,9 +13,13 @@ from Code.InterruptionManager import InterruptionManager
 from Code.IOHandler import IOHandler
 from Code.ReadyQueue import ReadyQueue
 from Code.IOQueue import IOQueue
-from Code.TimeOutHandler import TimeOutHandler
 from Code.KillHandler import KillHandler
 from Code.NewPCBHandler import NewPCBHandler
+from Code.IOHandler import IOHandler
+from Code.KillHandler import KillHandler
+from Code.TimeOutHandler import TimeOutHandler
+from Code.InterruptionManager import InterruptionManager
+
 
 class SetUpMixin(object):
 
@@ -57,4 +61,14 @@ class SetUpMixin(object):
         # Program Loader
         self.prLoader = ProgramLoader(self.hd, self.mem, self.interruptionManager)
         
-
+        self.mem = Memory()
+        self.killHandler = KillHandler()
+        self.timeOutHandler = TimeOutHandler()
+        self.ioHandler = IOHandler
+        self.handlerList = []
+        self.handlerList.append(self.killHandler)
+        self.handlerList.append(self.timeOutHandler)
+        self.handlerList.append(self.ioHandler)
+        self.interruptionManager = InterruptionManager() 
+        #self.cpu = CPU(self.mem, self.interruptionManager)
+    

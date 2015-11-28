@@ -1,4 +1,6 @@
 from Code.CPU import CPU
+from threading import Thread
+import time
 
 class Clock(Thread):
 
@@ -6,6 +8,6 @@ class Clock(Thread):
         self.CPU = cpu
 
     def executeClock(self):
-        while(true):
-            sleep(1)
+        while(True):
+            time.sleep(1)
             self.CPU.execute
