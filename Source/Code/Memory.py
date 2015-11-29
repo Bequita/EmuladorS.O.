@@ -11,6 +11,7 @@ class Memory(object):
         self.memoryBlocks = self.initializeMemory(numberOfblocks)
         # Tabla de: Marco - Flag usado o no - PCB id
         self.blocksTable = self.initializeTable(numberOfblocks)
+        self.pcbList = []
         
     def initializeMemory(self, blocksNumber):
         aux = 0

@@ -21,15 +21,33 @@ class PCB(object):
         PCB.Id += 1
         
     def assignPageToBlock(self, page, block):
-        self.pagesTable.pageToBlock(page, block)
+        self.pagesTable.addPageToBlock(page, block)
+        
+    def movePageToDisk(self, page):
+        self.pagesTable.moveToDisk(page)
+        
+    def movePageToMemory(self, page):
+        self.pagesTable.moveToMemory(page)
         
 class PagesTable(object):
     
     def __init__(self):
         self.pagesToBlock = {}
         
-    def pageToBlock(self, page, block):
+    def addPageToBlock(self, page, block):
         self.pagesToBlock[page] = (block, 0)
         
-    def isNowInDisc(self, page, block):
-        self.pagesToBlock[page] = (block, 1)
+    def moveToDisk(self, page):
+        tuplePage = self.pagesToBlock[page]
+        self.pagesToBlock[page] = (tuplePage[0], 1)
+        
+    def moveToMemory(self, page):
+        tuplePage = self.pagesToBlock[page]
+        self.pagesToBlock[page] = (tuplePage[0], 0)
+        
+    def isInDisk(self, page):
+        tuplePage = self.pagesToBlock[page]
+        return tuplePage[1]
+        
+        
+        

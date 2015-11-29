@@ -48,7 +48,7 @@ class SetUpMixin(object):
         # Handlers de las interrupciones
         self.ioHandler = IOHandler(self.IOQueue, self.mem)
         self.timeOutHandler = TimeOutHandler()
-        self.killHandler = KillHandler(self.mem)
+        self.killHandler = KillHandler(self.mem, None)
         self.newPcbHandler = NewPCBHandler(self.readyQueue)
         
         # Interruption Manager, con sus handlers registrados
@@ -61,14 +61,14 @@ class SetUpMixin(object):
         # Program Loader
         self.prLoader = ProgramLoader(self.hd, self.mem, self.interruptionManager)
         
-        self.mem = Memory()
-        self.killHandler = KillHandler()
-        self.timeOutHandler = TimeOutHandler()
-        self.ioHandler = IOHandler
-        self.handlerList = []
-        self.handlerList.append(self.killHandler)
-        self.handlerList.append(self.timeOutHandler)
-        self.handlerList.append(self.ioHandler)
-        self.interruptionManager = InterruptionManager() 
+        #self.mem = Memory()
+        #self.killHandler = KillHandler()
+        #self.timeOutHandler = TimeOutHandler()
+        #self.ioHandler = IOHandler
+        #self.handlerList = []
+        #self.handlerList.append(self.killHandler)
+        #self.handlerList.append(self.timeOutHandler)
+        #self.handlerList.append(self.ioHandler)
+        #self.interruptionManager = InterruptionManager() 
         #self.cpu = CPU(self.mem, self.interruptionManager)
     
