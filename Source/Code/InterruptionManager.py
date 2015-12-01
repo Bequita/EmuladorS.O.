@@ -3,6 +3,7 @@ Created on 15 de set. de 2015
 
 @author: matutee
 '''
+from Code.Kernel import Kernel
 
 class InterruptionManager(object):
 
@@ -11,6 +12,7 @@ class InterruptionManager(object):
         self.irqList = []
         
     def addInterruption(self, interruption):
+        self.kernel.mode = Kernel.KERNEL
         self.irqList.append(interruption)
         #self.kernel.mutexKernel.release()
     

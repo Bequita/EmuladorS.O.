@@ -3,32 +3,32 @@ Created on 30 de set. de 2015
 
 @author: matutee
 '''
-from Code.Instruction import Instruction, InstructionKind
-from Code.Program import Program
-from Code.HardDisk import HardDisk
-from Code.Memory import Memory
-from Code.PCB import PCB
-from Code.ProgramLoader import ProgramLoader
-from Code.InterruptionManager import InterruptionManager
-from Code.IOHandler import IOHandler
-from Code.ReadyQueue import ReadyQueue
-from Code.IOQueue import IOQueue
-from Code.KillHandler import KillHandler
-from Code.NewPCBHandler import NewPCBHandler
-from Code.IOHandler import IOHandler
-from Code.KillHandler import KillHandler
-from Code.TimeOutHandler import TimeOutHandler
-from Code.InterruptionManager import InterruptionManager
-from Code.Scheduler import Scheduler
 from Code.CPU import CPU
-from Code.ProgramLoader import ProgramLoader
-from Code.Kernel import Kernel
-from Code.ReadyQueue import CeldaEnvejecimiento
 from Code.Clock import Clock
+from Code.HardDisk import HardDisk
+from Code.IOHandler import IOHandler
+from Code.IOHandler import IOHandler
 from Code.IOManager import IOManager
-from Code.ReadyQueue import ReadyQueue
-from Code.PCB import PCB
 from Code.IOQueue import IOQueue
+from Code.IOQueue import IOQueue
+from Code.Instruction import Instruction, InstructionKind
+from Code.InterruptionManager import InterruptionManager
+from Code.InterruptionManager import InterruptionManager
+from Code.Kernel import Kernel
+from Code.KillHandler import KillHandler
+from Code.KillHandler import KillHandler
+from Code.Memory import Memory
+from Code.NewPCBHandler import NewPCBHandler
+from Code.PCB import PCB
+from Code.PCB import PCB
+from Code.Program import Program
+from Code.ProgramLoader import ProgramLoader
+from Code.ProgramLoader import ProgramLoader
+from Code.ReadyQueue import CeldaEnvejecimiento
+from Code.ReadyQueue import ReadyQueue
+from Code.ReadyQueue import ReadyQueue
+from Code.Scheduler import Scheduler
+from Code.TimeOutHandler import TimeOutHandler
 
 
 class SetUpMixin(object):
@@ -120,10 +120,11 @@ def main():
     interruptionManager.handlersList.append(killHandler)
     programLoader.loadProgram("PrimerPrograma")
     
-    clock.start()
-    scheduler.start()    
+    #scheduler.start()    
     kernel.start()
     iOManager.start()
+    
+    clock.start()
     #kernel.start()
     #scheduler.start()
     

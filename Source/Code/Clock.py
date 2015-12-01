@@ -1,7 +1,5 @@
-from Code.CPU import CPU
-from threading import Thread
 import time
-from ctypes.test.test_errno import threading
+from threading import Thread
 
 class Clock(Thread):
 
@@ -12,8 +10,8 @@ class Clock(Thread):
 
     def run(self):
         while(True):
-            self.cpu.mutex.release()
+            self.cpu.mutex.notify()
             print("tick a cpu")
-            self.iOManager.mutexIO.release()
+            self.iOManager.mutexIO.notify()
             print("tick a IO")
             time.sleep(4)

@@ -4,12 +4,20 @@ from threading import Thread
 from operator import eq
 
 class Kernel(Thread):
+      
+    USER = "userMode"
+    KERNEL = "kernelMode"
 
     def __init__(self, prLoader, intManager, scheduler, cpu):
         Thread.__init__(self)
         self.interruptionManager = intManager
         self.scheduler = scheduler 
         self.cpu = cpu
+        self.mode = Kernel.KERNEL
+        
+    def addInterruption(self, interruption):
+        self.mode = Kernel.KERNEL
+        self.irqManager.addInterruption(interruption)
 
     def loadProgramToPL(self, programName):
         self.programLoader.loadProgram(programName)
