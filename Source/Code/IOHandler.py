@@ -16,9 +16,8 @@ class IOHandler(object):
         return (irqK == IRQKind.IO)
 
     def handle(self, irq):
-        IOInstruction = self.fetch(irq.getPcb())
-        self.IOQueue.addInstructionToIOQueue(IOInstruction)
-        print("El IOHANDLER agrega una instruccion a la cola de IO")
-
+        inst = self.fetch(irq.getPcb())
+        self.IOQueue.addInstructionToIOQueue(inst)
+        
     def fetch(self, pcb):
-        return self.memory.fetchMem(pcb.baseDirection + pcb.programCounter)
+        return self.memory.fetchMem(pcb.baseDirection + pcb.programCounter -1)

@@ -16,9 +16,7 @@ class KillHandler(object):
         return (irqK == IRQKind.KILL)
     
     def handle(self, irq):
-        self.kernel.killRoutine(irq)
-        #self.memory.cleanMemoryFromPointer(irq.getPcb().baseDirection, irq.getPcb().programSize)
-        
+        self.memory.cleanMemoryFromPointer(irq.getPcb().baseDirection, irq.getPcb().programSize) 
         print("Se ejecuto el KILLHANDLER")
     
         

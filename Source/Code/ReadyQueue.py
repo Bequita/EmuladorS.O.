@@ -65,6 +65,9 @@ class CeldaEnvejecimiento:
             return (self.nivel2)
         if(nivel == 3):
             return (self.nivel3)
+    
+    def getPcb(self):
+        pass
 
 class ReadyQueue:
     def __init__(self):
@@ -101,4 +104,4 @@ class ReadyQueue:
                     return self.prioridades[prio].devolverUltimo()
                 prio = prio-1
         '''else   exception, no hay ningun elemento '''
-    
+                

@@ -1,13 +1,19 @@
 from Code.CPU import CPU
 from threading import Thread
 import time
+from ctypes.test.test_errno import threading
 
 class Clock(Thread):
 
-    def __init__(self, cpu):
-        self.CPU = cpu
+    def __init__(self, cpu, iOManager):
+        Thread.__init__(self)
+        self.cpu = cpu
+        self.iOManager = iOManager
 
-    def executeClock(self):
+    def run(self):
         while(True):
-            time.sleep(1)
-            self.CPU.execute
+            self.cpu.mutex.release()
+            print("tick a cpu")
+            self.iOManager.mutexIO.release()
+            print("tick a IO")
+            time.sleep(4)

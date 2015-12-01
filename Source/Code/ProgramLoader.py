@@ -12,6 +12,6 @@ class ProgramLoader(object):
         programSize = program.instructionsList.__len__()
 
         self.memory.loadProgram(program)
-        prPCB = PCB(self.memory.capacity.__len__() - programSize, programSize)
+        prPCB = PCB(self.memory.capacity.__len__() - programSize, programSize,2)
         self.readyQueue.addPcb(prPCB)
         

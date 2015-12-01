@@ -6,16 +6,19 @@ Created on 15 de set. de 2015
 
 class InterruptionManager(object):
 
-    def __init__(self):
-        self.handlersList = []
+    def __init__(self,handlerList):
+        self.handlersList = handlerList
         self.irqList = []
         
     def addInterruption(self, interruption):
-        self.interruptionList.append(interruption)
+        self.irqList.append(interruption)
+        #self.kernel.mutexKernel.release()
     
     def executeInterruption(self):
-        for interruption in self.interruptionList:
+        for interruption in self.irqList:
             self.handle(interruption)
+        for interruption in self.irqList:
+            self.irqList.remove(interruption)
             
     def registerHandler(self, handler):
         self.handlersList.append(handler)
