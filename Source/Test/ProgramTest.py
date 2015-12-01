@@ -13,11 +13,12 @@ class ProgramTest(unittest.TestCase):
         self.suMixin = SetUpMixin()
     
     def test_programIsCalled(self):
-        self.assertTrue(self.suMixin.prg.programName == 'PrimerPrograma')
+        self.assertTrue(self.suMixin.prg1.programName == 'PrimerPrograma')
+        self.assertTrue(self.suMixin.prg1.pages.__len__() == 3)
+        self.suMixin.prg1.instructionsToPages()
+        self.assertTrue(self.suMixin.prg1.pages[0].instructions.__len__() == 2)
+        self.assertTrue(self.suMixin.prg1.pages[0].instructions[0].message == "Primera instruccion ejecutada de CPU")
         
-    def test_programHasFiveInstr(self):
-        self.assertTrue(self.suMixin.prg.instructionsList.__len__() == 5)
-
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

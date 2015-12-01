@@ -6,27 +6,44 @@ Created on 1 de set. de 2015
 
 class Memory(object):
 
-    def __init__(self):
-        self.capacity = []
-        self.lastPosition = 0
+    def __init__(self, numberOfblocks, sizeOfBlock):
+        self.blockSize = sizeOfBlock
+        self.memoryBlocks = self.initializeMemory(numberOfblocks)
+        # Tabla de: Marco - Flag usado o no - PCB id
+        self.blocksTable = self.initializeTable(numberOfblocks)
+        self.pcbList = []
         
-    def loadProgram(self, program):
-        self.loadInstructions(program.instructionsList)
+    def initializeMemory(self, blocksNumber):
+        aux = 0
+        totalBlocks = []
+        while aux < blocksNumber:
+            totalBlocks.append(Block())
+            aux += 1
         
-    def loadInstructions(self, instructions):
-        for item in instructions:
-            self.capacity.insert(self.lastPosition, item)
-            self.lastPosition = self.lastPosition + 1
-
-    def fetchMem(self, position):
-        return self.capacity[position]
+        return totalBlocks
+        
+    def initializeTable(self, numberOfBlocks):
+        aux = 0
+        table = []
+        while aux < numberOfBlocks:
+            table.append((aux, 0, None))
+            aux += 1
+        
+        return table        
+        
+    def addInstruction(self, numberOfBlock, instruction):
+        self.memoryBlocks[numberOfBlock].addInstruction(instruction)
+        
+# Bloque que esta en memoria            
+class Block(object):
     
-    def cleanMemoryFromPointer(self, start, length):
-        while(length > 0):
-            self.capacity[start] = None
-            start = start + 1
-            length = length - 1
-            
+    def __init__(self):
+        self.instructionsList = []
+        
+    def addInstruction(self, instruction):
+        self.instructionsList.append(instruction)
+        
+        
     ## ESTE METODO DE MIERDA ESCRITO EN CASTELLANO LO DEJO PARA QUE VEAN QUE SE LIMPIA EL STACK DE MEMORIA
     def imprimirMemoria(self):
         for i in self.capacity:

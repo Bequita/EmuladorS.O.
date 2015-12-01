@@ -6,10 +6,11 @@ class HardDiskTest(unittest.TestCase):
 
     def setUp(self):
         self.suMixin = SetUpMixin()
-        self.suMixin.hd.addProgram(self.suMixin.prg)
+        self.suMixin.hd.addProgram(self.suMixin.prg1)
+        self.suMixin.hd.addProgram(self.suMixin.prg2)
 
     def test_programAddedToHD(self):
-        self.assertTrue(self.suMixin.hd.programList.__len__() == 1)
+        self.assertTrue(self.suMixin.hd.programList.__len__() == 2)
 
     def test_getProgramByName(self):
         programFound = self.suMixin.hd.getProgram('PrimerPrograma')

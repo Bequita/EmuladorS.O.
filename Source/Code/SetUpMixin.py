@@ -7,6 +7,14 @@ from Code.Instruction import Instruction, InstructionKind
 from Code.Program import Program
 from Code.HardDisk import HardDisk
 from Code.Memory import Memory
+from Code.PCB import PCB
+from Code.ProgramLoader import ProgramLoader
+from Code.InterruptionManager import InterruptionManager
+from Code.IOHandler import IOHandler
+from Code.ReadyQueue import ReadyQueue
+from Code.IOQueue import IOQueue
+from Code.KillHandler import KillHandler
+from Code.NewPCBHandler import NewPCBHandler
 from Code.IOHandler import IOHandler
 from Code.KillHandler import KillHandler
 from Code.TimeOutHandler import TimeOutHandler
@@ -26,16 +34,29 @@ from Code.IOQueue import IOQueue
 class SetUpMixin(object):
 
     def __init__(self):
+        # Instrucciones
         self.ins1 = Instruction("Primera instruccion ejecutada de CPU", InstructionKind.CPU)
         self.IOins1 = Instruction("PRIMERA INSTRUCCION DE IO", InstructionKind.IO)
         self.ins2 = Instruction("Segunda instruccion ejecutada de CPU", InstructionKind.CPU)
         self.ins3 = Instruction("Tercera instruccion ejecutada de CPU", InstructionKind.CPU)
         self.IOins2 = Instruction("SEGUNDA INSTRUCCION DE IO", InstructionKind.IO)
         
-        self.prg = Program("PrimerPrograma", [self.ins1,self.IOins1,self.ins2,self.ins3,self.IOins2])
+        # Programas con su lista de instrucciones
+        self.prg1 = Program("PrimerPrograma", [self.ins1,self.IOins1,self.ins2,self.ins3,self.IOins2], 2, 1)
+        self.prg2 = Program("SegundoPrograma", [self.ins1,self.IOins1,self.ins2,self.ins3], 2, 2)
+        
+        # Colas
+        self.readyQueue = ReadyQueue()
+        self.IOQueue = IOQueue()
+        
+        # Disco rigido
         self.hd = HardDisk()
-        self.mem = Memory()
-        self.killHandler = KillHandler()
+        
+        # Memoria
+        self.mem = Memory(4, 2)
+        
+        # Handlers de las interrupciones
+        self.ioHandler = IOHandler(self.IOQueue, self.mem)
         self.timeOutHandler = TimeOutHandler()
         self.ioHandler = IOHandler
         self.handlerList = []
@@ -107,3 +128,4 @@ def main():
     #scheduler.start()
     
 main()
+
