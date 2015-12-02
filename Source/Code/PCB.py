@@ -29,6 +29,15 @@ class PCB(object):
     def movePageToMemory(self, page):
         self.pagesTable.moveToMemory(page)
         
+    def hasPageInTable(self, page):
+        return self.pagesTable.pagesToBlock.get(page) != None
+    
+    def isPageInDisk(self, page):
+        return self.pagesTable.isInDisk(page)
+    
+    def getBlockOfPage(self, page):
+        self.pagesTable.getBlock(page)
+        
 class PagesTable(object):
     
     def __init__(self):
@@ -47,7 +56,8 @@ class PagesTable(object):
         
     def isInDisk(self, page):
         tuplePage = self.pagesToBlock[page]
-        return tuplePage[1]
+        return (tuplePage[1] == 1)
         
-        
-        
+    def getBlock(self, page):
+        tuplePage = self.pagesToBlock[page]
+        return tuplePage[0]

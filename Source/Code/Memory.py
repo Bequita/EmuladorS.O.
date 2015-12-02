@@ -34,6 +34,44 @@ class Memory(object):
     def addInstruction(self, numberOfBlock, instruction):
         self.memoryBlocks[numberOfBlock].addInstruction(instruction)
         
+    def fetch(self, pcb, instruction):
+        self.addPCBToList(pcb)
+        
+        tupleResult = divmod(instruction, self.blockSize)
+        page = tupleResult[0]
+        instPosition = tupleResult[1]
+        
+        # Caso 1: el pcb tiene un marco asociado a la pagina, y la misma esta en memoria
+        if pcb.hasPageInTable(page):
+            block = self.memoryBlocks[pcb.getBlockOfPage(page)]
+            
+            # Corroboro si esta en memoria las instrucciones de la pagina
+            if (not pcb.isPageInDisk(page)):
+                return block.getInstruction(instPosition)
+            # Voy a buscar las instrucciones al disco y las cargo a memoria   
+            else:
+                # ir a disco y cargar la pagina a memoria
+                self.loadInstructionsToMemory(pcb.programName, page, block)
+                # decirle al pcb que las instrucciones de esa pagina estan en memoria ahora
+                self.changePCBPageFromDiskToMemory(pcb, page)
+                # retornar la instruccion correspondiente
+                return block.getInstruction(instPosition)
+                
+        else:
+        #FALTA UNA CONDICION MAS
+        
+        
+    
+    def addPCBToList(self, pcb):
+        exist = False
+        for item in self.pcbList:
+            if item.pcbID == pcb.pcbID:
+                exist = True
+                
+        if not exist:
+            self.pcbList.append(pcb)
+        
+        
 # Bloque que esta en memoria            
 class Block(object):
     
@@ -42,7 +80,9 @@ class Block(object):
         
     def addInstruction(self, instruction):
         self.instructionsList.append(instruction)
-        
+     
+    def getInstruction(self, instPosition):
+        return self.instructionsList[instPosition]
         
     ## ESTE METODO DE MIERDA ESCRITO EN CASTELLANO LO DEJO PARA QUE VEAN QUE SE LIMPIA EL STACK DE MEMORIA
     def imprimirMemoria(self):
