@@ -82,10 +82,10 @@ def main():
     listIntruction.append(ins1)
     listIntruction.append(ins2)
     listIntruction.append(ins3)
-    prg = Program("PrimerPrograma", listIntruction)
+    prg = Program("PrimerPrograma", listIntruction,3,2)
     hd = HardDisk()
     hd.addProgram(prg)
-    mem = Memory()
+    mem = Memory(2,3)
     
     readyQueue = ReadyQueue()
     

@@ -6,15 +6,15 @@ from Code.Kernel import Kernel
 
 class CPU(object):
 
-    def __init__(self, mem, interrManager, kernel):
-        self.memory = mem
-        self.interruptionManager = interrManager
+    def __init__(self, systemComponents):
+        self.memory = systemComponents.mem
+        self.interruptionManager = systemComponents.interrupManager
         self.pcbLoaded = None
         self.quantum = 0
         self.ticks= 4
         self.counter=0
         self.mutex = Condition()
-        self.kernel = kernel
+        self.kernel = systemComponents.kernel
 
     def assignPCB(self, pcb, quantum): # quantum enviado desde scheduler
         self.pcbLoaded = pcb

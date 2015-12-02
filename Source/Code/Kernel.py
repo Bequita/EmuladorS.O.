@@ -8,11 +8,11 @@ class Kernel(Thread):
     USER = "userMode"
     KERNEL = "kernelMode"
 
-    def __init__(self, prLoader, intManager, scheduler, cpu):
+    def __init__(self, systemComponents):
         Thread.__init__(self)
-        self.interruptionManager = intManager
-        self.scheduler = scheduler 
-        self.cpu = cpu
+        self.interruptionManager = systemComponents.interrupManager
+        self.scheduler = systemComponents.scheduler 
+        self.cpu = systemComponents.cpu
         self.mode = Kernel.KERNEL
         
     def addInterruption(self, interruption):
@@ -55,14 +55,10 @@ class Kernel(Thread):
                 self.executeInterruptions()
                 print("estoy haciendo interrupciones")
                 #self.contextSwitching()
-                self.cpu.context = "userMode"
-                self.scheduler.schedulerAssing.release()
                 #self.cpu.mutexFetch.release()
             else:
-                #print("kernel mando a ejecutar a cpu")
-                #self.cpu.mutexFetch.release()
-                self.cpu.execute()
-            print("estoy vivo")
+                self.scheduler.assignPCB()
+                self.mode = Kernel.USER 
         
          
             

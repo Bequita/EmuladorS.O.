@@ -7,12 +7,12 @@ from Code.Interruption import IRQKind
 
 class NewPCBHandler(object):
 
-    def __init__(self, readyQ):
-        self.readyQueue = readyQ
+    def __init__(self, sistemComponents):
+        self.scheduler = sistemComponents.scheduler
         
     def canHandle(self, irqK):
         return irqK == IRQKind.NEWPCB
     
     def handle(self, irq):
-        self.readyQueue.addPcb(irq.getPcb())
+        self.scheduler.addPCB(irq.getPcb())
         
