@@ -84,14 +84,7 @@ class Block(object):
     def getInstruction(self, instPosition):
         return self.instructionsList[instPosition]
         
-            
-            
-            
-            
-        
-        
-        
-        
-        
-        
-        
+    ## ESTE METODO DE MIERDA ESCRITO EN CASTELLANO LO DEJO PARA QUE VEAN QUE SE LIMPIA EL STACK DE MEMORIA
+    def imprimirMemoria(self):
+        for i in self.capacity:
+            print(i.getMessage())

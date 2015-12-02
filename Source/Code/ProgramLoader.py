@@ -9,9 +9,12 @@ class ProgramLoader(object):
         self.interruptionManager = interrupManager
 
     def loadProgram(self, programName):
-        programFromDisk = self.hardDisk.getProgram(programName)
-        programSize = programFromDisk.instructionsList.__len__()
-        priority = programFromDisk.priority
+        program = self.hardDisk.getProgram(programName)
+        programSize = program.instructionsList.__len__()
+
+        self.memory.loadProgram(program)
+        prPCB = PCB(self.memory.capacity.__len__() - programSize, programSize,2)
+        self.readyQueue.addPcb(prPCB)
         
         pcbNew = PCB(programName, programSize, priority)
         self.interruptionManager.handle(IRQ(pcbNew, IRQKind.NEWPCB))
