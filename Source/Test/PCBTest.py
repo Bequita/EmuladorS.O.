@@ -16,10 +16,12 @@ class Test(unittest.TestCase):
 
     def test_assignPageToBlock(self):
         self.pcb.assignPageToBlock(2, 4)
+        self.assertTrue(self.pcb.hasPageInTable(2))
         self.assertTrue(self.pcb.pagesTable.pagesToBlock[2] == (4,0))
         self.assertTrue(self.pcb.pcbID == 0)
         self.assertTrue(self.pcb2.pcbID == 1)
         self.assertTrue(self.pcb3.pcbID == 2)
+        
         
     def test_pagesTable(self):
         self.pcb.assignPageToBlock(1, 4)
