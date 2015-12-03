@@ -6,25 +6,18 @@ from Code.CPU import CPU
 from Code.Clock import Clock
 from Code.HardDisk import HardDisk
 from Code.IOHandler import IOHandler
-from Code.IOHandler import IOHandler
 from Code.IOManager import IOManager
-from Code.IOQueue import IOQueue
 from Code.IOQueue import IOQueue
 from Code.Instruction import Instruction, InstructionKind
 from Code.InterruptionManager import InterruptionManager
-from Code.InterruptionManager import InterruptionManager
 from Code.Kernel import Kernel
-from Code.KillHandler import KillHandler
 from Code.KillHandler import KillHandler
 from Code.Memory import Memory
 from Code.NewPCBHandler import NewPCBHandler
 from Code.PCB import PCB
-from Code.PCB import PCB
 from Code.Program import Program
 from Code.ProgramLoader import ProgramLoader
-from Code.ProgramLoader import ProgramLoader
 from Code.ReadyQueue import CeldaEnvejecimiento
-from Code.ReadyQueue import ReadyQueue
 from Code.ReadyQueue import ReadyQueue
 from Code.Scheduler import Scheduler
 from Code.TimeOutHandler import TimeOutHandler

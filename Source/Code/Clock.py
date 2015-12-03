@@ -3,10 +3,10 @@ from threading import Thread
 
 class Clock(Thread):
 
-    def __init__(self, cpu, iOManager):
+    def __init__(self,systemComponents):
         Thread.__init__(self)
-        self.cpu = cpu
-        self.iOManager = iOManager
+        self.cpu = systemComponents.cpu
+        self.iOManager = systemComponents.iOManager
 
     def run(self):
         while(True):

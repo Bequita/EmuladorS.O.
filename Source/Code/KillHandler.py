@@ -8,9 +8,9 @@ from Code.Interruption import IRQKind
 
 class KillHandler(object):
 
-    def __init__(self, mem, kernel):
-        self.memory = mem
-        self.kernel = kernel
+    def __init__(self, systemComponents):
+        self.memory = systemComponents.memory
+        self.kernel = systemComponents.kernel
 
     def canHandle(self, irqK):
         return (irqK == IRQKind.KILL)
