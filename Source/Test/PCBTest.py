@@ -6,6 +6,7 @@ Created on Nov 27, 2015
 import unittest
 
 from Code.PCB import PCB
+from Code.Program import Page
 
 class Test(unittest.TestCase):
 
@@ -22,7 +23,6 @@ class Test(unittest.TestCase):
         self.assertTrue(self.pcb2.pcbID == 1)
         self.assertTrue(self.pcb3.pcbID == 2)
         
-        
     def test_pagesTable(self):
         self.pcb.assignPageToBlock(1, 4)
         self.assertTrue(self.pcb.pagesTable.pagesToBlock[1] == (4,0))
@@ -31,6 +31,10 @@ class Test(unittest.TestCase):
         self.pcb.movePageToMemory(1)
         self.assertTrue(self.pcb.pagesTable.pagesToBlock[1] == (4,0))
 
+    def test_getBlockOfPage(self):
+        self.pcb.assignPageToBlock(5, 6)
+        self.assertTrue(self.pcb.getBlockOfPage(5) == 6)
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

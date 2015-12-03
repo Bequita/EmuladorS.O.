@@ -1,9 +1,3 @@
-'''
-Created on 1 de set. de 2015
-
-@author: matutee
-'''
-
 class PCB(object):
 
     Id = 0
@@ -20,24 +14,29 @@ class PCB(object):
     def incrementId(self):
         PCB.Id += 1
         
+    def getID(self):
+        return self.pcbID
+     
+    #
     def assignPageToBlock(self, page, block):
         self.pagesTable.addPageToBlock(page, block)
         
+    #    
     def movePageToDisk(self, page):
         self.pagesTable.moveToDisk(page)
-        
+    
+    #   
     def movePageToMemory(self, page):
         self.pagesTable.moveToMemory(page)
-        
+    
+    #    
     def hasPageInTable(self, page):
         return self.pagesTable.pagesToBlock.get(page) != None
     
-    def isPageInDisk(self, page):
-        return self.pagesTable.isInDisk(page)
-    
+    #
     def getBlockOfPage(self, page):
-        self.pagesTable.getBlock(page)
-        
+        return self.pagesTable.getBlock(page)
+
 class PagesTable(object):
     
     def __init__(self):
@@ -54,10 +53,11 @@ class PagesTable(object):
         tuplePage = self.pagesToBlock[page]
         self.pagesToBlock[page] = (tuplePage[0], 0)
         
-    def isInDisk(self, page):
-        tuplePage = self.pagesToBlock[page]
-        return (tuplePage[1] == 1)
-        
     def getBlock(self, page):
         tuplePage = self.pagesToBlock[page]
         return tuplePage[0]
+    
+    def getNumberBlock(self,page):
+        tuplePage = self.pagesToBlock[page]
+        return tuplePage[0]
+    

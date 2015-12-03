@@ -5,12 +5,12 @@ Created on 30 de set. de 2015
 '''
 import unittest
 
-from Code.SetUpMixin import SetUpMixin
+from Code.SetUpMixinMaty import SetUpMixinMaty
 
 class ProgramTest(unittest.TestCase):
     
     def setUp(self):
-        self.suMixin = SetUpMixin()
+        self.suMixin = SetUpMixinMaty()
     
     def test_programIsCalled(self):
         self.assertTrue(self.suMixin.prg1.programName == 'PrimerPrograma')

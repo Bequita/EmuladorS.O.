@@ -5,12 +5,12 @@ Created on Nov 27, 2015
 '''
 import unittest
 
-from Code.SetUpMixin import SetUpMixin
+from Code.SetUpMixinMaty import SetUpMixinMaty
 
 class Test(unittest.TestCase):
 
     def setUp(self):
-        self.suMixin = SetUpMixin()
+        self.suMixin = SetUpMixinMaty()
         self.suMixin.hd.addProgram(self.suMixin.prg1)
         self.suMixin.hd.addProgram(self.suMixin.prg2)
         self.programLoader = self.suMixin.prLoader

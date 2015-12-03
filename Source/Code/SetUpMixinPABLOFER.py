@@ -1,6 +1,5 @@
 '''
 Created on 30 de set. de 2015
-
 @author: matutee
 '''
 from Code.CPU import CPU
@@ -29,9 +28,10 @@ from Code.ReadyQueue import ReadyQueue
 from Code.ReadyQueue import ReadyQueue
 from Code.Scheduler import Scheduler
 from Code.TimeOutHandler import TimeOutHandler
+from Code.SystemComponents import SystemComponents
 
 
-class SetUpMixin(object):
+class SetUpMixinMaty(object):
 
     def __init__(self):
         # Instrucciones
@@ -82,10 +82,11 @@ def main():
     listIntruction.append(ins1)
     listIntruction.append(ins2)
     listIntruction.append(ins3)
-    prg = Program("PrimerPrograma", listIntruction)
+    prg = Program("PrimerPrograma", listIntruction,3,2)
     hd = HardDisk()
     hd.addProgram(prg)
-    mem = Memory()
+    
+    mem = Memory(2,3)
     
     readyQueue = ReadyQueue()
     
@@ -121,12 +122,14 @@ def main():
     programLoader.loadProgram("PrimerPrograma")
     
     #scheduler.start()    
-    kernel.start()
-    iOManager.start()
+    quantum = 3
+    so = SystemComponents(Kernel(so),CPU(so),Memory(2,3),iOManager,interruptionManager,iOQueue,Scheduler(so),quantum,readyQueue)
     
-    clock.start()
+    so.kernel.start()
+    so.iOManager.start()
+    
+    so.clock.start()
     #kernel.start()
     #scheduler.start()
     
 main()
-
