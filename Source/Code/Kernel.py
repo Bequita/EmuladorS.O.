@@ -32,33 +32,26 @@ class Kernel(Thread):
     def freeMemory(self,pcb):
         self.memory.cleanMemoryFromPointer(pcb().baseDirection, pcb().programSize)    
                         
-    def contextSwitching(self):
-        if (self.cpu.context == "userMode"):
-            self.cpu.context = "kernelMode"
+    def modeSwitching(self):
+        if (self.mode == Kernel.USER):
+            self.mode = Kernel.KERNEL
         else:
-            self.cpu.context = "userMode"
+            self.mode = Kernel.USER
     
     def executeInterruptions(self):
-    #    self.contextSwitching()
         #hasta que no termina de atender todas las interrupciones no pone modo usuario
-        print("se va a ejecutar la instruccion")
+        print("se van a ejecutar las instrucciones")
         self.interruptionManager.executeInterruption()
-    #    self.contextSwitching()
-        #self.scheduler.startScheduler()
-        #print("hice un tick")
     
     def run(self):
         while(True):
-            #print(self.cpu.context)
             if(self.interruptionManager.irqList.__len__() > 0):
-                #self.contextSwitching()
                 self.executeInterruptions()
-                print("estoy haciendo interrupciones")
-                #self.contextSwitching()
-                #self.cpu.mutexFetch.release()
+                print("ejecutando interrupciones")
             else:
                 self.scheduler.assignPCB()
-                self.mode = Kernel.USER 
+                self.modeSwitching()
+                self.cpu.execute()
         
          
             

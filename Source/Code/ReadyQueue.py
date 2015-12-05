@@ -3,91 +3,137 @@ Created on Sep 15, 2015
 
 @author: fernando
 '''
+import Queue
 
-class CeldaEnvejecimiento:
-    def __init__(self):
-        self.nivel1 = []
-        self.nivel2 = []
-        self.nivel3 = []       
-        
-    def agregarPcb(self, pcb):
-        self.nivel1.insert(0,pcb)
-
-    def devolverUltimoNivel(self):
-        return (self.nivel3)
+class ReadyQueue:
+    def __init__(self, estrategy):
+        self.estrategy = estrategy
     
-    def envejecerPrimero(self):
-        self.nivel3 = self.nivel2
-        self.nivel2 = self.nivel1
-        self.nivel1 = []
+    def addPcb(self, pcb):
+        self.estrategy.addPcb(pcb)
 
-    def envejecer(self, nivel):
-        self.nivel3 = self.nivel2
-        self.nivel2 = self.nivel1
-        self.nivel1 = nivel
+    def getPcb(self):
+        return self.estrategy.getPcb()
 
-    def envejecerUltimo(self, nivel):
-        self.nivel3 = self.nivel3+self.nivel2
-        self.nivel2 = self.nivel1
-        self.nivel1 = nivel
+class Cell:
+    def __init__(self):
+        self.level1 = []
+        self.level2 = []
+        self.level3 = []       
+        
+    def addPcb(self, pcb):
+        self.level1.insert(0, pcb)
 
-    def devolverUltimo(self):
-        if (len(self.nivel3) != 0):
-            return (self.nivel3.pop())
-        if(len(self.nivel2) !=0):
-            return (self.nuvel2.pop())
-        return (self.nivel1.pop())
+    def returnLastLevel(self):
+        return (self.level3)
+    
+    def ageFirst(self):
+        self.level3 = []
+        for pcb in self.level2:
+            self.level3.append(pcb)
+        self.level2 = []
+        for pcb in self.level1:
+            self.level2.append(pcb)
+        self.level1 = []        
+
+    def age(self, level):
+        self.level3 = []
+        for pcb in self.level2:
+            self.level3.append(pcb)
+        self.level2 = []
+        for pcb in self.level1:
+            self.level2.append(pcb)
+        self.level1 = []
+        for pcb in level:
+            self.level1.append(pcb)
+
+    def ageLast(self, level):
+        # self.level3 = [] #los elementos de este nivel solo salen con un getPcb()
+        for pcb in self.level2:
+            self.level3.append(pcb) 
+        self.level2 = []
+        for pcb in self.level1:
+            self.level2.append(pcb)
+        self.level1 = []
+        for pcb in level:
+            self.level1.append(pcb)
+
+
+    def getPcb(self):
+        if (self.level3.__len__() != 0):
+            pcb = (self.level3.pop())
+        elif(self.level2.__len__() != 0):
+            pcb = (self.level2.pop())
+        else: pcb = (self.level1.pop())
+        return pcb
     ''' Siempre va a sacar un elemento en una celda que tiene elementos,
         La logica del filtrado la realiza la cola al momento de 
         hacer el llamado al metodo devolver '''
 
-    def hayElemento(self):
-        return (len(self.nivel3) != 0 or len(self.nivel2) != 0 or len(self.nivel1) != 0)
+    def empty(self):
+        return (len(self.level3) == 0 and len(self.level2) == 0 and len(self.level1) == 0)
     
-    def devolverNivel(self, nivel):
-        if (nivel == 1 ):
-            return (self.nivel1)
-        if(nivel == 2):
-            return (self.nivel2)
-        if(nivel == 3):
-            return (self.nivel3)
-    
-    def getPcb(self):
-        pass
+    def returnLevel(self, level):
+        if (level == 1):
+            return (self.level1)
+        if(level == 2):
+            return (self.level2)
+        if(level == 3):
+            return (self.level3)
 
-class ReadyQueue:
+class PriorityQueue:
     def __init__(self):
-        self.prioridades = {}
-        self.cantPrio = 3
-        self.prioridades[1]= CeldaEnvejecimiento()
-        self.prioridades[2]= CeldaEnvejecimiento()
-        self.prioridades[3]= CeldaEnvejecimiento()
+        self.priorities = {}
+        self.numOfPriorities = 3
+        self.priorities[1] = Cell()
+        self.priorities[2] = Cell()
+        self.priorities[3] = Cell()
 
     def addPcb(self, pcb):
-        agregarA = pcb.priority
-        self.prioridades[agregarA].agregarPcb(pcb)
+        addTo = pcb.priority
+        self.envejecer()
+        self.priorities[addTo].addPcb(pcb)
 
     def envejecer(self):
-        ultimoNivel2 = self.prioridades[2].devolverUltimoNivel()
-        ultimoNivel1 = self.prioridades[1].devolverUltimoNivel()
-        self.prioridades[3].envejecerUltimo(ultimoNivel2)
-        self.prioridades[2].envejecer(ultimoNivel1)
-        self.prioridades[1].envejecerPrimero()
+        lastLevel2 = self.priorities[2].returnLastLevel()
+        lastLevel1 = self.priorities[1].returnLastLevel()
+        self.priorities[3].ageLast(lastLevel2)
+        self.priorities[2].age(lastLevel1)
+        self.priorities[1].ageFirst()
         
-    def hayElementos(self):
-        return (self.prioridades[1].hayElemento() or
-                self.prioridades[2].hayElemento() or 
-                self.prioridades[3].hayElemento())
+    def empty(self):
+        return (self.priorities[1].empty() and
+                self.priorities[2].empty() and 
+                self.priorities[3].empty())
                 
     
     def getPcb(self):
-        prio = self.cantPrio
-        encontro = False
-        if(self.hayElementos()):
-            while (prio >0 and encontro == False): 
-                if(self.prioridades[prio].hayElemento()):
-                    encontro = True
-                    return self.prioridades[prio].devolverUltimo()
-                prio = prio-1
-        '''else   exception, no hay ningun elemento '''
+        priority = self.numOfPriorities
+        priorityLevel = self.numOfPriorities
+        found = False 
+        pcb = None
+        while(priority > 0 and found == False):
+            if(not self.priorities[priority].empty()):
+                priorityLevel = self.numOfPriorities
+                while(priorityLevel > 0 and found == False):
+                    if(not (self.priorities[priority]).empty()):
+                        found = True
+                        pcb = (self.priorities[priority]).getPcb()
+                        #self.priorities[priority].remove(pcb)
+                    else:
+                        priorityLevel = priorityLevel - 1
+            priority = priority - 1
+        return(pcb)                    
                 
+class FifoQueue:
+    def __init__(self):
+        self.queue = Queue()
+
+    def addPcb(self, pcb):
+        self.queue.put(pcb)
+
+    def getPcb(self):
+        return self.queue.get()
+
+    def size(self):
+        return self.queue.qsize          

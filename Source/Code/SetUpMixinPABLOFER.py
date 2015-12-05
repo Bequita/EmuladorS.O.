@@ -17,7 +17,7 @@ from Code.NewPCBHandler import NewPCBHandler
 from Code.PCB import PCB
 from Code.Program import Program
 from Code.ProgramLoader import ProgramLoader
-from Code.ReadyQueue import CeldaEnvejecimiento
+from Code.ReadyQueue import PriorityQueue
 from Code.ReadyQueue import ReadyQueue
 from Code.Scheduler import Scheduler
 from Code.TimeOutHandler import TimeOutHandler
@@ -58,7 +58,7 @@ class SetUpMixinMaty(object):
         self.handlerList.append(self.ioHandler)
         self.interruptionManager = InterruptionManager()
         self.cpu = CPU(self.mem, self.interruptionManager) 
-        self.readyQueue = CeldaEnvejecimiento()
+        #self.readyQueue = CeldaEnvejecimiento()
         self.scheduler = Scheduler(self.cpu,4,self.readyQueue)
         self.programLoader = ProgramLoader(self.hd,self.mem,self.readyQueue)
         self.kernel = Kernel(self.programLoader,self.interruptionManager)
@@ -79,50 +79,144 @@ def main():
     hd = HardDisk()
     hd.addProgram(prg)
     
-    mem = Memory(2,3)
+    mem = Memory(9,3,hd)
     
-    readyQueue = ReadyQueue()
+    readyQueue = ReadyQueue(PriorityQueue)
     
     iOQueue = IOQueue()
-    ioHandler = IOHandler(iOQueue,mem)
-    handlerList = []
-    handlerList.append(ioHandler)
-    timeOutHandler = TimeOutHandler(readyQueue)
-    handlerList.append(timeOutHandler)
+    #ioHandler = IOHandler(iOQueue,mem)
+    #handlerList.append(ioHandler)
+    #timeOutHandler = TimeOutHandler(readyQueue)
+    #handlerList.append(timeOutHandler)
     
-    scheduler = Scheduler(None,2,readyQueue)
-    interruptionManager = InterruptionManager(handlerList)
-    programLoader = ProgramLoader(hd,mem,readyQueue)
+    #scheduler = Scheduler(None,2,readyQueue)
+    #programLoader = ProgramLoader(hd,mem,readyQueue)
     
     
-    iOManager = IOManager(ioHandler)
+    #iOManager = IOManager(ioHandler)
     
-    cpu = CPU(mem,interruptionManager,scheduler,iOManager)
-    kernel = Kernel(programLoader,interruptionManager,scheduler,cpu)  
-    scheduler.cpu=cpu
+    #cpu = CPU(mem,interruptionManager,scheduler,iOManager)
+    #kernel = Kernel(programLoader,interruptionManager,scheduler,cpu)  
+    #scheduler.cpu=cpu
     
     
-    clock = Clock(cpu,iOManager)
+    #clock = Clock(cpu,iOManager)
     
-    killHandler = KillHandler(mem,kernel)
-    handlerList.append(killHandler)
+    #killHandler = KillHandler(mem,kernel)
+    #handlerList.append(killHandler)
     
-    mem.loadProgram(prg)
-    print(mem.capacity)
+    #mem.loadProgram(prg)
+    #print(mem.capacity)
     
-    killHandler = KillHandler(mem,kernel)
-    interruptionManager.handlersList.append(killHandler)
-    programLoader.loadProgram("PrimerPrograma")
+    #killHandler = KillHandler(mem,kernel)
+    #interruptionManager.handlersList.append(killHandler)
+    #programLoader.loadProgram("PrimerPrograma")
     
     #scheduler.start()    
     quantum = 3
-    so = SystemComponents(Kernel(so),CPU(so),Memory(2,3),iOManager,interruptionManager,iOQueue,Scheduler(so),quantum,readyQueue)
+    #so = SystemComponents()
+    #so.readyQueue = readyQueue
+    #so.quantum = quantum
+    #so.hd = hd
+    #so.mem = mem
+    #so.cpu = CPU(so)
+    #so.scheduler = Scheduler(so)
+    #so.newPCBHandler = NewPCBHandler(so)
+    #so.handlerIO = IOHandler(so)
+    #so.timeOutHandler = TimeOutHandler(so)
+    #so.handlerKill = KillHandler(so)
+    #so.handlerList = []
+    #so.handlerList.append(so.timeOutHandler)
+    #so.handlerList.append(so.handlerIO)
+    #so.handlerList.append(so.handlerKill)
+    #so.handlerList.append(so.newPCBHandler)
+    #so.interrupManager = InterruptionManager(so)
+    #so.kernel = Kernel(so)
+    #so.cpu.kernel = so.kernel
+    #so.iOManager = IOManager(so)
+    #so.iOQueue = iOQueue
+
+    #so.programLoader = ProgramLoader(so)
+    #so.clock = Clock(so)    
+    #print(so.handlerList)
     
-    so.kernel.start()
-    so.iOManager.start()
+    #so.programLoader.loadProgram("PrimerPrograma")
     
-    so.clock.start()
-    #kernel.start()
-    #scheduler.start()
+    #print(mem.blocksTable)
+    #print(mem.blockSize)
+    #print(mem.firstBlockFree())
+    #print(mem.hardDisk)
+    #print(mem.memoryBlocks)
+    #print(mem.spaceFreeInMemory())
     
+    #so.kernel.start()
+    #so.iOManager.start()
+    #so.clock.start()
+    
+    pcb1 = PCB("PrimerPrograma",3,1)
+    pcb2 = PCB("segundoPrograma",3,2)
+    pcb3 = PCB("terceroPrograma",3,3)
+    pcb4 = PCB("cuartoPrograma",3,1)
+    pcb5 = PCB("quintoPrograma",3,2)
+    pcb6 = PCB("sextoPrograma",3,3)
+    
+    readyQueue = ReadyQueue(PriorityQueue())
+    readyQueue.addPcb(pcb1)
+    readyQueue.addPcb(pcb2)
+    readyQueue.addPcb(pcb5)
+    readyQueue.addPcb(pcb6)
+    readyQueue.addPcb(pcb4)
+    readyQueue.addPcb(pcb3)
+    
+
+    print(" ")
+    print("PRIORIDAD 1 CADA UNO DE SUS NIVELES")
+    print(readyQueue.estrategy.priorities[1].level1)
+    print(readyQueue.estrategy.priorities[1].level2)
+    print(readyQueue.estrategy.priorities[1].level3)
+    print("")
+    print("PRIORIDAD 2 CADA UNO DE SUS NIVELES")
+    print(readyQueue.estrategy.priorities[2].level1)
+    print(readyQueue.estrategy.priorities[2].level2)
+    print(readyQueue.estrategy.priorities[2].level3)
+    print("")
+    print("PRIORIDAD 3 CADA UNO DE SUS NIVELES")
+    print(readyQueue.estrategy.priorities[3].level1)
+    print(readyQueue.estrategy.priorities[3].level2)
+    print(readyQueue.estrategy.priorities[3].level3)
+    print(" ")
+    print("PEDIDO DE UN PCB -----------------------------")
+    print("")
+    print(readyQueue.getPcb().__str__() + " tiene que ser el pcb que esta mas abajo en las colas")
+    print("")
+    print("COLA DE READY DESPUES DE DAR EL PCB ----------")
+    print("")
+    
+    print("PRIORIDAD 1 CADA UNO DE SUS NIVELES")
+    print(readyQueue.estrategy.priorities[1].level1)
+    print(readyQueue.estrategy.priorities[1].level2)
+    print(readyQueue.estrategy.priorities[1].level3)
+    print("")
+    print("PRIORIDAD 2 CADA UNO DE SUS NIVELES")
+    print(readyQueue.estrategy.priorities[2].level1)
+    print(readyQueue.estrategy.priorities[2].level2)
+    print(readyQueue.estrategy.priorities[2].level3)
+    print("")
+    print("PRIORIDAD 3 CADA UNO DE SUS NIVELES")
+    print(readyQueue.estrategy.priorities[3].level1)
+    print(readyQueue.estrategy.priorities[3].level2)
+    print(readyQueue.estrategy.priorities[3].level3)
+    print(" ")
+    #print(readyQueue.getPcb())
+    #print(readyQueue.getPcb())
+    #print(readyQueue.getPcb())
+    #print(readyQueue.getPcb())
+    #print(readyQueue.getPcb())
+    
+    #print(mem.blocksTable)
+    #print(mem.blockSize)
+    #print(mem.firstBlockFree())
+    #print(mem.hardDisk)
+    #print(mem.memoryBlocks)
+    #print(mem.spaceFreeInMemory())
 main()

@@ -1,4 +1,4 @@
-from _random import Random
+import random
 class Memory(object):
 
     def __init__(self, numberOfblocks, sizeOfBlock,hardDisk):
@@ -85,7 +85,7 @@ class Memory(object):
             instBlock = program.getPage(block).instructionsList
             self.saveInstruction(block,instBlock)
         else:
-            block = Random.randint(0, self.memoryBlocks.__len__())
+            block = random.randint(0, self.memoryBlocks.__len__())
             #actualizo PCB saliente
             idPcbOutgoing = self.pcbInTable(block)
             self.updatePCB(idPcbOutgoing,block)
@@ -148,5 +148,5 @@ class Block(object):
         return self.instructionsList[instPosition]
     
     def isEmpty(self):
-        return self.instructionsList.__len__() > 0
+        return self.instructionsList.__len__() == 0
         

@@ -7,14 +7,13 @@ from Code.Kernel import Kernel
 
 class InterruptionManager(object):
 
-    def __init__(self,handlerList):
-        self.handlersList = handlerList
+    def __init__(self,so):
+        self.handlersList = so.handlerList
         self.irqList = []
         
     def addInterruption(self, interruption):
-        self.kernel.mode = Kernel.KERNEL
         self.irqList.append(interruption)
-        #self.kernel.mutexKernel.release()
+        self.kernel.modeSwitching()
     
     def executeInterruption(self):
         for interruption in self.irqList:

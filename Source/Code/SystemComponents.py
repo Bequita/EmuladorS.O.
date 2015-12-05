@@ -1,15 +1,27 @@
-from Code.CPU import CPU
-
+from Code.HardDisk import HardDisk
+from Code.Memory import Memory
+from Code.ReadyQueue import ReadyQueue
+from Code.InterruptionManager import InterruptionManager
+from Code.TimeOutHandler import TimeOutHandler
 
 class SystemComponents(object):
 
-    def __init__(self,kernel,cpu,mem,iOManager,interrupManager,iOQueue,scheduler,quantum,readyQueue):
+    def __init__(self,kernel,cpu,hd,mem,readyQueue,iOManager,InterrupManager,iOQueue,quantum,programLoader,handlerIO,
+                 TimeOutHandler,handlerList,scheduler,timeOutHandler,handlerKill,clock):
+        self.handlerList = handlerList
+        self.hd = hd
+        self.mem = mem
+        self.readyQueue = readyQueue
         self.kernel = kernel
         self.cpu = cpu 
-        self.mem = mem
-        self.iOMnager = iOManager
-        self.interrupManager = interrupManager
+        self.iOManager = iOManager
+        self.interrupManager = InterrupManager
         self.iOQueue = iOQueue
         self.scheduler = scheduler
         self.quantum = quantum 
-        self.readyQueue = readyQueue 
+        self.handlerIO = handlerIO
+        self.timeOutHandler = timeOutHandler
+        self.programLoader = programLoader
+        self.handlerList = handlerList
+        self.handlerKill = handlerKill
+        self.clock = clock
