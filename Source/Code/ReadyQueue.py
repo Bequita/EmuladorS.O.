@@ -29,24 +29,17 @@ class Cell:
     
     def ageFirst(self):
         self.level3=self.level2
-        self.level2 = []
         self.level2 = (self.level1)
         self.level1 = []        
 
     def age(self, level):
-        self.level3 = []
         self.level3 = self.level2
-        self.level2 = []
         self.level2 = self.level1
-        self.level1 = []
         self.level1 = level
 
     def ageLast(self, level):
-        # self.level3 = [] #los elementos de este nivel solo salen con un getPcb()
         self.level3 = self.level2
-        self.level2 = []
         self.level2 = self.level1
-        self.level1 = []
         self.level1 = level
 
     def getPcb(self):
