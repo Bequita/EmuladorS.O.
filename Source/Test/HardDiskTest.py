@@ -15,7 +15,7 @@ class HardDiskTest(unittest.TestCase):
     def test_getProgramByName(self):
         programFound = self.suMixin.hd.getProgram('PrimerPrograma')
         self.assertTrue(programFound != None)
-        self.assertTrue(programFound.instructionsList.__len__() == 5)
+        self.assertTrue(programFound.instructionsList.__len__() == 4)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

@@ -148,5 +148,5 @@ class Block(object):
         return self.instructionsList[instPosition]
     
     def isEmpty(self):
-        return self.instructionsList.__len__() == 0
+        return self.instructionsList.__len__() > 0
         

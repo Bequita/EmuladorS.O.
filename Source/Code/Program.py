@@ -37,6 +37,12 @@ class Program(object):
                 currentPage += 1
                 auxSize = self.pageSize
 
+    def getPage(self, page):
+        return self.pages[page]
+    
+    def getName(self):
+        return self.programName
+
 class Page(object):
     
     def __init__(self):
