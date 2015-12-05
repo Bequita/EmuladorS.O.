@@ -153,12 +153,12 @@ def main():
     #so.iOManager.start()
     #so.clock.start()
     
-    pcb1 = PCB("PrimerPrograma",3,1)
-    pcb2 = PCB("segundoPrograma",3,2)
-    pcb3 = PCB("terceroPrograma",3,3)
-    pcb4 = PCB("cuartoPrograma",3,1)
-    pcb5 = PCB("quintoPrograma",3,2)
-    pcb6 = PCB("sextoPrograma",3,3)
+    pcb1 = PCB(1,"PrimerPrograma",3,1)
+    pcb2 = PCB(2,"segundoPrograma",3,2)
+    pcb3 = PCB(3,"terceroPrograma",3,3)
+    pcb4 = PCB(4,"cuartoPrograma",3,1)
+    pcb5 = PCB(5,"quintoPrograma",3,2)
+    pcb6 = PCB(6,"sextoPrograma",3,3)
     
     readyQueue = ReadyQueue(PriorityQueue())
     readyQueue.addPcb(pcb1)

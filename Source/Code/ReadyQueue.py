@@ -28,36 +28,26 @@ class Cell:
         return (self.level3)
     
     def ageFirst(self):
-        self.level3 = []
-        for pcb in self.level2:
-            self.level3.append(pcb)
+        self.level3=self.level2
         self.level2 = []
-        for pcb in self.level1:
-            self.level2.append(pcb)
+        self.level2 = (self.level1)
         self.level1 = []        
 
     def age(self, level):
         self.level3 = []
-        for pcb in self.level2:
-            self.level3.append(pcb)
+        self.level3 = self.level2
         self.level2 = []
-        for pcb in self.level1:
-            self.level2.append(pcb)
+        self.level2 = self.level1
         self.level1 = []
-        for pcb in level:
-            self.level1.append(pcb)
+        self.level1 = level
 
     def ageLast(self, level):
         # self.level3 = [] #los elementos de este nivel solo salen con un getPcb()
-        for pcb in self.level2:
-            self.level3.append(pcb) 
+        self.level3 = self.level2
         self.level2 = []
-        for pcb in self.level1:
-            self.level2.append(pcb)
+        self.level2 = self.level1
         self.level1 = []
-        for pcb in level:
-            self.level1.append(pcb)
-
+        self.level1 = level
 
     def getPcb(self):
         if (self.level3.__len__() != 0):
@@ -108,22 +98,21 @@ class PriorityQueue:
                 
     
     def getPcb(self):
-        priority = self.numOfPriorities
-        priorityLevel = self.numOfPriorities
+        priority = self.numOfPriorities # para buscar en todas las prioridades
+        priorityLevel = self.numOfPriorities # para buscar en todos los niveles de un prioridad determinada
         found = False 
         pcb = None
-        while(priority > 0 and found == False):
+        while(priority > 0 and found == False): # busca en cada prioridad
             if(not self.priorities[priority].empty()):
                 priorityLevel = self.numOfPriorities
-                while(priorityLevel > 0 and found == False):
+                while(priorityLevel > 0 and found == False): # busca en cada nivel de la prioridad
                     if(not (self.priorities[priority]).empty()):
                         found = True
                         pcb = (self.priorities[priority]).getPcb()
-                        #self.priorities[priority].remove(pcb)
                     else:
-                        priorityLevel = priorityLevel - 1
+                        priorityLevel = priorityLevel - 1 
             priority = priority - 1
-        return(pcb)                    
+        return(pcb)                
                 
 class FifoQueue:
     def __init__(self):
