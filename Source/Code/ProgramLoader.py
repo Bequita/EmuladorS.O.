@@ -13,9 +13,9 @@ class ProgramLoader(object):
         program = self.hardDisk.getProgram(programName)
         programSize = program.instructionsList.__len__()
         #generar random 1...3 para la prioridad o poner una cualquiera
-        self.memory.loadProgram(program)
-        prPCB = PCB(self.memory.capacity.__len__() - programSize, programSize,2)
-        self.scheduler.addPCB(prPCB)
+        #self.memory.loadProgram(program)
+        #prPCB = PCB(self.memory.capacity.__len__() - programSize, programSize,2)
+        #self.scheduler.addPCB(prPCB)
         
         pcbNew = PCB(programName, programSize, 2)
         self.interruptionManager.handle(IRQ(pcbNew, IRQKind.NEWPCB))

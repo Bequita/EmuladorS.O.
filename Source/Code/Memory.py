@@ -52,8 +52,6 @@ class Memory(object):
             
         return -1
     
-    ''' CODIGO HECHO POR MATIAS '''
-            
     def getInstructionsFromDisk(self, pcb, pageNumber):
         program = self.hardDisk.getProgram(pcb.programName)
         instructionList = program.getPage(pageNumber).instructions

@@ -3,18 +3,6 @@ from Code.Program import Program
 from Code.HardDisk import HardDisk
 from Code.Memory import Memory
 from Code.PCB import PCB
-from Code.ProgramLoader import ProgramLoader
-from Code.InterruptionManager import InterruptionManager
-from Code.IOHandler import IOHandler
-from Code.ReadyQueue import ReadyQueue
-from Code.IOQueue import IOQueue
-from Code.KillHandler import KillHandler
-from Code.NewPCBHandler import NewPCBHandler
-from Code.IOHandler import IOHandler
-from Code.KillHandler import KillHandler
-from Code.TimeOutHandler import TimeOutHandler
-from Code.InterruptionManager import InterruptionManager
-
 
 class SetUpMixinMaty(object):
 
