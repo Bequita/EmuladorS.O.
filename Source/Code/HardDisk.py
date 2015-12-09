@@ -1,9 +1,3 @@
-'''
-Created on 29 de set. de 2015
-
-@author: matutee
-'''
-
 class HardDisk(object):
 
     def __init__(self):

@@ -35,12 +35,12 @@ class SetUpMixinMaty(object):
         # Programas con su lista de instrucciones
         self.prg1 = Program("PrimerPrograma", [self.ins1,self.IOins1,self.ins2,self.ins3], 2, 2)
         self.prg2 = Program("SegundoPrograma", [self.ins1,self.ins2,self.ins3,self.IOins2], 2, 1)
-        self.prg3 = Program("TercerPrograma", [self.ins1,self.IOins1], 2, 3)
+        self.prg3 = Program("TercerPrograma", [self.ins1,self.IOins1,self.ins3], 2, 3)
         self.prg4 = Program("CuartoPrograma", [self.ins1], 2, 4)
-        self.prg5 = Program("QuintoPrograma",[self.ins3],2,5)
+        self.prg5 = Program("QuintoPrograma",[self.ins3], 2, 5)
         
         # PCB apuntando a sus respectivos programas
-        self.pcb = PCB(1,"PrimerPrograma", None, None)
+        self.pcb1 = PCB(1,"PrimerPrograma", None, None)
         self.pcb2 = PCB(2,"SegundoPrograma", None, None)
         self.pcb3 = PCB(3,"TercerPrograma", None, None)
         self.pcb4 = PCB(4,"CuartoPrograma", None, None)
