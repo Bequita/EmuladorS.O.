@@ -6,11 +6,11 @@ class Memory(object):
         self.hardDisk = hd
         self.blockSize = sizeOfBlock
         self.memoryBlocks = self.initializeMemory(numberOfblocks)
-        # Tabla de: Marco - Flag usado o no - PCB id
+        # Tabla de: (Marco, idPCB)
         self.blocksTable = self.initializeTable(numberOfblocks) 
         self.pcbList = []
         self.lastIdPcbAssing = None
-    #    
+
     def initializeMemory(self, blocksNumber):
         aux = 0
         totalBlocks = []
@@ -19,7 +19,7 @@ class Memory(object):
             aux += 1
         
         return totalBlocks
-    #    
+
     def initializeTable(self, numberOfBlocks):
         aux = 0
         table = []
@@ -27,7 +27,7 @@ class Memory(object):
             table.append((aux, None))
             aux += 1
         return table
-    #
+
     def pcbInTable(self, numberBlock):
         tupleAux = self.blocksTable[numberBlock]
         return tupleAux[1]
