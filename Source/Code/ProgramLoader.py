@@ -8,6 +8,7 @@ class ProgramLoader(object):
         self.memory = systemComponents.mem
         self.interruptionManager = systemComponents.interrupManager
         self.scheduler = systemComponents.scheduler
+        self.pids = 0
 
     def loadProgram(self, programName):
         program = self.hardDisk.getProgram(programName)
@@ -17,5 +18,10 @@ class ProgramLoader(object):
         #prPCB = PCB(self.memory.capacity.__len__() - programSize, programSize,2)
         #self.scheduler.addPCB(prPCB)
         
-        pcbNew = PCB(programName, programSize, 2)
-        self.interruptionManager.handle(IRQ(pcbNew, IRQKind.NEWPCB))
+        pcbNew = PCB(self.getPid(),programName, programSize, 2)
+        print("tiro interrupcion de new pcb")
+        self.interruptionManager.addInterruption(IRQ(pcbNew, IRQKind.NEWPCB))
+        
+    def getPid(self):
+        self.pids = self.pids + 1
+        return self.pids

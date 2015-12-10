@@ -18,10 +18,11 @@ class CPU(object):
     def assignPCB(self, pcb, quantum): # quantum enviado desde scheduler
         self.pcbLoaded = pcb
         self.quantum = quantum
+        print("scheduler me dio: " + pcb.programName.__str__())
 
     def process(self):
         if(self.quantum == 0 and self.pcbLoaded == None):
-            self.kernel.mode = Kernel.KERNEL
+            self.kernel.modeSwitching()
             print("Nada para ejecutar")
         elif(self.canExecute()):
             print("CPU va a ejecutar el PCB")
@@ -46,9 +47,11 @@ class CPU(object):
             raise NameError('Instruccion desconocida')
           
     def execute(self):
+        print("quiere ejecutar cpu el modo es: " + self.kernel.mode.__str__())
         while(self.kernel.mode == Kernel.USER):
             with self.mutex:
                 self.mutex.wait()
+                print("comienza a ejecutar")
                 self.process()
     
     def canExecute(self):
@@ -71,6 +74,8 @@ class CPU(object):
             self.pcbLoader = None
                         
     def fetch(self):
+        print("next instruction: " + self.pcbLoaded.nextInstruction.__str__())
+        print(self.pcbLoaded.pagesTable)
         return self.memory.fetch(self.pcbLoaded, self.pcbLoaded.nextInstruction)
 
     def lastInstruction(self):
