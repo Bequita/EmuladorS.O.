@@ -130,15 +130,11 @@ def main():
     ins3 = Instruction("TERCERA INSTRUCCION EJECUTADA DE CPU", InstructionKind.CPU)
     #IOins2 = Instruction("SEGUNDA INSTRUCCION DE IO", InstructionKind.IO)
     
-    #listIntruction = []
-    #listIntruction.append(ins1)
-    #listIntruction.append(ins2)
-    #listIntruction.append(ins3)
-    prg = Program("PrimerPrograma",[],3,2)
-    prg.instructionsList.append(ins1)
-    prg.instructionsList.append(ins2)
-    prg.instructionsList.append(ins3)
-    
+    listIntruction = []
+    listIntruction.append(ins1)
+    listIntruction.append(ins2)
+    listIntruction.append(ins3)
+    prg = Program("PrimerPrograma",listIntruction,3,2)    
         
     so.readyQueue = ReadyQueue(PriorityQueue())
     so.quantum = quantum
@@ -147,12 +143,16 @@ def main():
     so.mem = Memory(9,3,so.hd)
     so.mem.hardDisk = so.hd
     so.cpu = CPU(so)
-    print(printReadyQueue(so.readyQueue))
     so.scheduler = Scheduler(so)
     so.scheduler.readyQueue = so.readyQueue
+    so.scheduler.cpu = so.cpu
+    so.scheduler.quantum = so.quantum
     so.newPCBHandler = NewPCBHandler(so)
     so.newPCBHandler.scheduler = so.scheduler
+    so.iOQueue = IOQueue()
     so.handlerIO = IOHandler(so)
+    so.handlerIO.iOQueue
+    so.handlerIO.memory = so.mem
     so.timeOutHandler = TimeOutHandler(so)
     so.handlerKill = KillHandler(so)
     so.handlerList = []
@@ -167,9 +167,11 @@ def main():
     so.cpu.kernel = so.kernel
     so.kernel.cpu = so.cpu
     so.cpu.scheduler = so.scheduler
+    so.cpu.interruptionManager = so.interrupManager
+    so.cpu.memory = so.mem
     so.scheduler.cpu = so.cpu
     so.iOManager = IOManager(so)
-    so.iOQueue = IOQueue()
+    
 
     so.programLoader = ProgramLoader(so)
     so.cpu.pcbLoaded = so.programLoader

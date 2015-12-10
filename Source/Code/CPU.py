@@ -42,7 +42,7 @@ class CPU(object):
             print("La instruccion es de IOManager, La ejecuta IOManager")
             self.executeIOInstruction(currentInstruction)
             #self.iOManager.add(IRQ(self.pcbLoaded, IRQKind.IO))
-            #self.pcbLoaded.programCounter = self.pcbLoaded.programCounter + 1
+            #self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
         else:
             raise NameError('Instruccion desconocida')
           
@@ -60,12 +60,12 @@ class CPU(object):
     def executeIOInstruction(self,currentInstruction):
         if(self.lastInstruction()):
             self.pcbLoaded = None
-        self.pcbLoaded.programCounter = self.pcbLoaded.programCounter + 1
+        self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
         self.iOManager.add(IRQ(self.pcbLoaded, IRQKind.IO))
 
     def executeCPUInstruction(self,currentInstruction):
         # Determino la proxima direccion de memoria de la siguiente instruccion
-        self.pcbLoaded.programCounter = self.pcbLoaded.programCounter + 1
+        self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
         if(self.lastInstruction()):
             self.kernel.addInterruption(IRQ(self.pcbLoaded, IRQKind.KILL))
             self.pcbLoader = None
@@ -75,9 +75,8 @@ class CPU(object):
                         
     def fetch(self):
         print("next instruction: " + self.pcbLoaded.nextInstruction.__str__())
-        print(self.pcbLoaded.pagesTable)
         return self.memory.fetch(self.pcbLoaded, self.pcbLoaded.nextInstruction)
 
     def lastInstruction(self):
-        return (self.pcbLoaded.programCounter + 1 == self.pcbLoaded.programSize)
+        return (self.pcbLoaded.nextInstruction + 1 == self.pcbLoaded.programSize)
         
