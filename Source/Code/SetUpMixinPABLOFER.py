@@ -118,29 +118,31 @@ def main():
         print(readyQueue.estrategy.priorities[3].level3)
         
         
-    quantum = 5
-    so = None
+    quantum = 4
+    #so = None
     so = SystemComponents()#(Kernel(so),CPU(so),hd,mem,ReadyQueue(so),IOManager(so),InterruptionManager(so),IOQueue(so),
                           #quantum,ProgramLoader(so),IOHandler(so),[],Scheduler(so),TimeOutHandler(so),KillHandler(so),
                           #Clock(so))
     
     ins1 = Instruction("PRIMERA INSTRUCCION EJECUTADA DE CPU", InstructionKind.CPU)
-    #IOins1 = Instruction("PRIMERA INSTRUCCION DE IO", InstructionKind.IO)
+    iOins1 = Instruction("PRIMERA INSTRUCCION DE IO", InstructionKind.IO)
     ins2 = Instruction("SEGUNDA INSTRUCCION EJECUTADA DE CPU", InstructionKind.CPU)
     ins3 = Instruction("TERCERA INSTRUCCION EJECUTADA DE CPU", InstructionKind.CPU)
     #IOins2 = Instruction("SEGUNDA INSTRUCCION DE IO", InstructionKind.IO)
     
     listIntruction = []
     listIntruction.append(ins1)
+    listIntruction.append(iOins1)
     listIntruction.append(ins2)
     listIntruction.append(ins3)
-    prg = Program("PrimerPrograma",listIntruction,3,2)    
+    prg1 = Program("PrimerPrograma", listIntruction, 2, 2) 
+    prg1.instructionsToPages()
         
     so.readyQueue = ReadyQueue(PriorityQueue())
     so.quantum = quantum
     so.hd = HardDisk()
-    so.hd.addProgram(prg)
-    so.mem = Memory(9,3,so.hd)
+    so.hd.addProgram(prg1)
+    so.mem = Memory(4,2,so.hd)
     so.mem.hardDisk = so.hd
     so.cpu = CPU(so)
     so.scheduler = Scheduler(so)
@@ -171,6 +173,7 @@ def main():
     so.cpu.memory = so.mem
     so.scheduler.cpu = so.cpu
     so.iOManager = IOManager(so)
+    so.cpu.iOManager = so.iOManager
     
 
     so.programLoader = ProgramLoader(so)
@@ -193,6 +196,22 @@ def main():
     
     #print(printReadyQueue(so.readyQueue))
     #so.scheduler.assignPCB()
+    
+    #print("programas en disco" + so.hd.programList.__str__())
+    #print("instrucciones del programa" + so.hd.programList[0].instructionsList.__str__())
+    #print(so.interrupManager.irqList)
+    #print(so.scheduler.printReadyQueue())
+    #so.interrupManager.executeInterruption()
+    #print(so.scheduler.printReadyQueue())
+    #print(so.cpu.pcbLoaded)
+    #print(so.scheduler.assignPCB())
+    #print(so.cpu.pcbLoaded)
+    #print(so.cpu.pcbLoaded.getID())
+    #print(so.cpu.pcbLoaded.programName)
+    #print(so.cpu.pcbLoaded.pagesTable)
+    #print(so.cpu.pcbLoaded.pagesTable.pagesToBlock)
+    
+    
     so.kernel.start()
     so.iOManager.start()
     so.clock.start()

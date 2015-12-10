@@ -38,6 +38,8 @@ class Program(object):
                 auxSize = self.pageSize
 
     def getPage(self, page):
+        print("el indice es: " + page.__str__())
+        print("mis indices son: " + self.pages.__len__().__str__())
         return self.pages[page]
     
     def getName(self):

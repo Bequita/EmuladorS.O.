@@ -17,7 +17,7 @@ class Kernel(Thread):
         
     def addInterruption(self, interruption):
         self.mode = Kernel.KERNEL
-        self.irqManager.addInterruption(interruption)
+        self.interruptionManager.addInterruption(interruption)
 
     def loadProgramToPL(self, programName):
         self.programLoader.loadProgram(programName)

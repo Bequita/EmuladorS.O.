@@ -14,6 +14,7 @@ class CPU(object):
         self.counter=0
         self.mutex = Condition()
         self.kernel = systemComponents.kernel
+        self.iOManager = systemComponents.iOManager
 
     def assignPCB(self, pcb, quantum): # quantum enviado desde scheduler
         self.pcbLoaded = pcb
@@ -58,24 +59,26 @@ class CPU(object):
         return self.pcbLoaded != None and self.kernel.mode == Kernel.USER 
 
     def executeIOInstruction(self,currentInstruction):
+        self.iOManager.add(IRQ(self.pcbLoaded, IRQKind.IO))
+        self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
         if(self.lastInstruction()):
             self.pcbLoaded = None
-        self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
-        self.iOManager.add(IRQ(self.pcbLoaded, IRQKind.IO))
 
     def executeCPUInstruction(self,currentInstruction):
         # Determino la proxima direccion de memoria de la siguiente instruccion
-        self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
         if(self.lastInstruction()):
             self.kernel.addInterruption(IRQ(self.pcbLoaded, IRQKind.KILL))
             self.pcbLoader = None
         elif(self.quantum == 0):
             self.interruptionManager.addInterruption(IRQ(self.pcbLoaded, IRQKind.TIMEOUT))
             self.pcbLoader = None
+        self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
                         
     def fetch(self):
         print("next instruction: " + self.pcbLoaded.nextInstruction.__str__())
+        #print("pagina cero del pcb" + self.pcbLoaded.pagesTable.pagesToBlock[0].__str__())
         return self.memory.fetch(self.pcbLoaded, self.pcbLoaded.nextInstruction)
+        print(self.memory.memoryBlocks)
 
     def lastInstruction(self):
         return (self.pcbLoaded.nextInstruction + 1 == self.pcbLoaded.programSize)

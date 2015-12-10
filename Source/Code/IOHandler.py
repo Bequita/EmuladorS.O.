@@ -20,4 +20,4 @@ class IOHandler(object):
         self.iOQueue.addInstructionToIOQueue(inst)
         
     def fetch(self, pcb):
-        return self.memory.fetchMem(pcb, self.pcb.nextInstruction)
+        return self.memory.fetch(pcb, pcb.nextInstruction)

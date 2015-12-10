@@ -54,8 +54,10 @@ class Memory(object):
     
     def getInstructionsFromDisk(self, pcb, pageNumber):
         program = self.hardDisk.getProgram(pcb.programName)
+        print("El programa que trae de disco es" + program.programName)
+        print("En dico, el programa obtenido: " + program.__str__())
         instructionList = program.getPage(pageNumber).instructions
-        
+        print("Las instrucciones: " + instructionList.__str__())
         return instructionList
     
     def findBlockForPage(self, page):
@@ -85,12 +87,15 @@ class Memory(object):
             self.pcbList.append(pcb)
                     
     def fetch(self, pcb, instruction):
+        print("esta en memoria")
         self.addPCBToList(pcb)
         tupleResult = divmod(instruction, self.blockSize)
         page = tupleResult[0]
+        print(tupleResult[0])
         instPosition = tupleResult[1]
         
         if pcb.hasPageInTable(page):
+            print("paso por 1")
             # Corroboro si esta en memoria las instrucciones de la pagina
             if (not pcb.inHardDisk(page)):
                 block = self.memoryBlocks[pcb.getBlockOfPage(page)]
@@ -111,10 +116,13 @@ class Memory(object):
                 block = self.memoryBlocks[pcb.getBlockOfPage(page)]
                 return block.getInstruction(instPosition)
         else:
+            print("paso por 2")
             # Buscar en disco las instrucciones a cargar
             instructionsList = self.getInstructionsFromDisk(pcb, page)
+            print("instruccion list obtenida en memoria" + instructionsList.__str__())
             # Encontrar un marco libre en la tabla de marcos para asignarle la pagina (actualizar pcb saliente)
             freeBlockNumber = self.findBlockForPage(page)
+            print("primer bloque libre obtenido en memoria" + freeBlockNumber.__str__())
             # Asignar pagina -> marco dentro del pcb
             pcb.assignPageToBlock(page, freeBlockNumber)
             # Cargar las instrucciones a memoria
@@ -123,6 +131,7 @@ class Memory(object):
             self.updateBlocksTable(freeBlockNumber, pcb.pcbID)
             # Retorno la instruccion correspondiente
             block = self.memoryBlocks[pcb.getBlockOfPage(page)]
+            #print("instruccion del bloque obtenido en memoria" + block.getInstruction.__len__)
             return block.getInstruction(instPosition)
         
 
@@ -139,7 +148,7 @@ class Block(object):
         self.instructionsList.append(instruction)
      
     def getInstruction(self, instPosition):
-        print("lista de instrucciones" + self.instructionsList.__str__())
+        print("lista de instrucciones: " + self.instructionsList.__len__().__str__())
         return self.instructionsList[instPosition]
     
     def isEmptyBlock(self):
