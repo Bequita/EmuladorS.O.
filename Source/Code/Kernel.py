@@ -40,7 +40,6 @@ class Kernel(Thread):
     
     def executeInterruptions(self):
         #hasta que no termina de atender todas las interrupciones no pone modo usuario
-        print("se van a ejecutar las instrucciones")
         self.interruptionManager.executeInterruption()
     
     def run(self):
@@ -49,8 +48,8 @@ class Kernel(Thread):
                 self.executeInterruptions()
                 print("ejecutando interrupciones")
             else:
+                self.mode = Kernel.USER
                 self.scheduler.assignPCB()
-                self.modeSwitching()
                 self.cpu.execute()
         
          

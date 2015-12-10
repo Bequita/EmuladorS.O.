@@ -96,9 +96,12 @@ class PriorityQueue:
         found = False 
         pcb = None
         while(priority > 0 and found == False): # busca en cada prioridad
+            print("prioridad: " + priority.__str__() )
             if(not self.priorities[priority].empty()):
+                print("no esta vacio: " + priority.__str__())
                 priorityLevel = self.numOfPriorities
                 while(priorityLevel > 0 and found == False): # busca en cada nivel de la prioridad
+                    print("nivel" + priorityLevel.__str__())
                     if(not (self.priorities[priority]).empty()):
                         found = True
                         pcb = (self.priorities[priority]).getPcb()

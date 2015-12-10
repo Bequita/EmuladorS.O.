@@ -15,4 +15,5 @@ class NewPCBHandler(object):
     
     def handle(self, irq):
         self.scheduler.addPCB(irq.getPcb())
+        print("se la di al scheduler")
         

@@ -9,6 +9,7 @@ class InterruptionManager(object):
 
     def __init__(self,so):
         self.handlersList = so.handlerList
+        self.kernel = so.kernel 
         self.irqList = []
         
     def addInterruption(self, interruption):

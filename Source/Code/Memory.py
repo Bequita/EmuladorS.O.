@@ -133,6 +133,7 @@ class Block(object):
         self.instructionsList.append(instruction)
      
     def getInstruction(self, instPosition):
+        print("lista de instrucciones" + self.instructionsList.__str__())
         return self.instructionsList[instPosition]
     
     def isEmptyBlock(self):
