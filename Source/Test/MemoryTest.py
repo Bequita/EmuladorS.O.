@@ -36,7 +36,6 @@ class Test(unittest.TestCase):
         self.memory.addPCBToList(self.pcb2)
         self.memory.addPCBToList(self.pcb3)
         self.assertTrue(self.memory.pcbList.__len__() == 3)
-        
 
     def test_getInstructionsFromDisk(self):
         list_instructions = self.memory.getInstructionsFromDisk(self.pcb1, 1)
@@ -47,11 +46,17 @@ class Test(unittest.TestCase):
     def test_updateOldPCBStatus(self):
         blocksTableList = self.memory.blocksTable
         self.pcb1.pagesTable.addPageToBlock(0, 1)
+        self.pcb1.pagesTable.addPageToBlock(2, 3)
         self.assertTrue(self.pcb1.pagesTable.pagesToBlock[0] == (1, 0))
+        self.assertTrue(self.pcb1.pagesTable.pagesToBlock[2] == (3, 0))
+        
         self.memory.pcbList.append(self.pcb1)
-        blocksTableList[0] = (0, 1)
-        self.memory.updateOldPCBStatus(0, 0)
+        blocksTableList[1] = (1, 1)
+        blocksTableList[3] = (3, 1)
+        self.memory.updateOldPCBStatus(1)
+        self.memory.updateOldPCBStatus(3)
         self.assertTrue(self.pcb1.pagesTable.pagesToBlock[0] == (1, 1))
+        self.assertTrue(self.pcb1.pagesTable.pagesToBlock[2] == (3, 1))
 
     def test_findBlockForPage_MemoryBlocksFree(self):
         blockList = self.memory.memoryBlocks
@@ -64,36 +69,47 @@ class Test(unittest.TestCase):
     def test_findBlockForPage_MemoryFull(self):
         blockList = self.memory.memoryBlocks
         blocksTableList = self.memory.blocksTable
+        
+        # Asigno las paginas a los bloques
+        self.pcb1.assignPageToBlock(7, 0)
+        self.pcb2.assignPageToBlock(8, 1)
+        self.pcb3.assignPageToBlock(9, 2)
+        self.pcb4.assignPageToBlock(9, 3)
+        
+        # Seteo en la lista de bloques, que bloques estan mapeados a los PCBid's
         blocksTableList[0] = (0, 1)
         blocksTableList[1] = (1, 2)
         blocksTableList[2] = (2, 3)
         blocksTableList[3] = (3, 4)
+        
+        # Agrego los PCB's a la lista en memoria
         self.memory.pcbList.append(self.pcb1)
         self.memory.pcbList.append(self.pcb2)
         self.memory.pcbList.append(self.pcb3)
         self.memory.pcbList.append(self.pcb4)
-        self.assertTrue(self.memory.findBlockForPage(1) == 0)
+        
+        # Lleno los bloques para asegurarme que elija uno al azar
         blockList[0].instructionsList.append(1)
         blockList[1].instructionsList.append(4)
         blockList[2].instructionsList.append(3)
         blockList[3].instructionsList.append(2)
-        self.pcb1.assignPageToBlock(0, 1)
-        self.pcb2.assignPageToBlock(0, 2)
-        self.pcb3.assignPageToBlock(0, 3)
-        self.pcb4.assignPageToBlock(0, 4)
+        
         self.assertTrue(self.memory.findBlockForPage(0) < 4)
+        self.assertTrue(self.pcb1.pagesTable.pagesToBlock[7] == (0, 1) or self.pcb2.pagesTable.pagesToBlock[8] == (1, 1)
+                        or self.pcb3.pagesTable.pagesToBlock[9] == (2, 1) or self.pcb4.pagesTable.pagesToBlock[9] == (3, 1))
 
     def test_MemoryFetch_WhenPCBHasNoPage(self):
         result_message = self.setUpGeneral.IOins1.getMessage()
         self.assertTrue(self.memory.fetch(self.pcb1, 1).getMessage() == result_message)
         self.assertTrue(self.pcb1.pagesTable.pagesToBlock[0] == (0, 0))
+        
         result_message = self.setUpGeneral.ins2.getMessage()
         blockList = self.memory.memoryBlocks
         blockList[0].instructionsList.append(1)
         self.assertTrue(self.memory.fetch(self.pcb1, 2).getMessage() == result_message)
         self.assertTrue(self.pcb1.pagesTable.pagesToBlock[1] == (1, 0))
         self.assertTrue(self.memory.pcbList.__len__() == 1)
-        
+
     def test_MemoryFetch_WhenPCBHasPageInMemory(self):
         result_message = self.setUpGeneral.IOins1.getMessage()
         self.pcb1.assignPageToBlock(0, 1)
@@ -103,17 +119,31 @@ class Test(unittest.TestCase):
     def test_MemoryFetch_WhenPCBHasPageInDisk(self):
         result_message1 = self.setUpGeneral.ins1.getMessage()
         result_message2 = self.setUpGeneral.IOins1.getMessage()
+        
         self.pcb1.assignPageToBlock(0, 1)
-        self.pcb2.assignPageToBlock(0, 1)
+        self.pcb2.assignPageToBlock(7, 1)
         self.pcb1.movePageToDisk(0)
+        # La pagina 0 del PCB 1 esta en disco
         self.assertTrue(self.pcb1.pagesTable.pagesToBlock[0] == (1, 1))
-        self.assertTrue(self.pcb2.pagesTable.pagesToBlock[0] == (1, 0))
+        # La pagina 0 del PCB 2 esta en memoria
+        self.assertTrue(self.pcb2.pagesTable.pagesToBlock[7] == (1, 0))
+
         self.memory.pcbList.append(self.pcb2)
         self.memory.blocksTable[1] = (1, 2)
+
+        # La tabla de marcos tiene asignado el PCB 2 en el bloque 1
+        self.assertTrue(self.memory.blocksTable[1] == (1, 2))
+        # Hago un fetch de las instrucciones 0 y 1 del PCB 1, corroboro los resultados
         self.assertTrue(self.memory.fetch(self.pcb1, 0).getMessage() == result_message1)
         self.assertTrue(self.memory.fetch(self.pcb1, 1).getMessage() == result_message2)
+        # Verifico que se actualizo la tabla de paginas de cada PCB
         self.assertTrue(self.pcb1.pagesTable.pagesToBlock[0] == (1, 0))
-        self.assertTrue(self.pcb2.pagesTable.pagesToBlock[0] == (1, 1))
+        self.assertTrue(self.pcb2.pagesTable.pagesToBlock[7] == (1, 1))
+        # Verifico que se haya actualizado la tabla de marcos
+        self.assertTrue(self.memory.blocksTable[1] == (1, 1))
+        # Corroboro las instrucciones cargadas en el marco 1, que pertenezcan al PCB 1
+        self.assertTrue(self.memory.memoryBlocks[1].instructionsList[0].getMessage() == result_message1)
+        self.assertTrue(self.memory.memoryBlocks[1].instructionsList[1].getMessage() == result_message2)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

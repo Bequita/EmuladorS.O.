@@ -37,7 +37,7 @@ class Memory(object):
             if item.pcbID == idPCB:
                 return item
   
-    def saveInstruction(self,numberBlock,instBlock):
+    def saveInstruction(self, numberBlock, instBlock):
         block = self.memoryBlocks[numberBlock]
         block.clean()
         for item in instBlock:
@@ -63,15 +63,17 @@ class Memory(object):
         
         if blockNumber == -1:
             blockNumber = random.randrange(self.memoryBlocks.__len__()-1)
-            self.updateOldPCBStatus(blockNumber, page)
+            self.updateOldPCBStatus(blockNumber)
             
         return blockNumber
     
-    def updateOldPCBStatus(self, blockNumber, page):
+    def updateOldPCBStatus(self, blockNumber):
         idPCB = self.pcbInTable(blockNumber)
         oldPCB = self.getPCB(idPCB)
-        # VERIFICAR QUE EFECTIVAMENTE PAGE ES LA PAGINA QUE TENGO QUE MOVER A DISCO
-        oldPCB.movePageToDisk(page)
+        oldPCB.movePageToDisk(oldPCB.pageCorrespondingToBlock(blockNumber))
+        
+    def updateBlocksTable(self, blockNumber, idpcb):
+        self.blocksTable[blockNumber] = (blockNumber, idpcb)
         
     def addPCBToList(self, pcb):
         exist = False
@@ -98,11 +100,13 @@ class Memory(object):
                 # Buscar en disco las instrucciones a cargar
                 instructionsList = self.getInstructionsFromDisk(pcb, page)
                 # Actualizar el PCB que estaba ocupando ese marco
-                self.updateOldPCBStatus(current_block, page)
+                self.updateOldPCBStatus(current_block)
                 # Cargar las instrucciones en memoria
                 self.saveInstruction(pcb.getBlockOfPage(page), instructionsList)
                 # Decirle al pcb nuevo que la pagina esta ahora en memoria
                 pcb.movePageToMemory(page)
+                # Actualizo la tabla de marcos
+                self.updateBlocksTable(current_block, pcb.pcbID)
                 # Retornar las instrucciones
                 block = self.memoryBlocks[pcb.getBlockOfPage(page)]
                 return block.getInstruction(instPosition)
@@ -115,6 +119,8 @@ class Memory(object):
             pcb.assignPageToBlock(page, freeBlockNumber)
             # Cargar las instrucciones a memoria
             self.saveInstruction(freeBlockNumber, instructionsList)
+            # Actualizo la tabla de marcos
+            self.updateBlocksTable(freeBlockNumber, pcb.pcbID)
             # Retorno la instruccion correspondiente
             block = self.memoryBlocks[pcb.getBlockOfPage(page)]
             return block.getInstruction(instPosition)

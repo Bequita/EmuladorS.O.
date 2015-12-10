@@ -30,6 +30,16 @@ class Test(unittest.TestCase):
         self.pcb1.assignPageToBlock(5, 6)
         self.assertTrue(self.pcb1.getBlockOfPage(5) == 6)
         
+    def test_obtainPageWithBlock(self):
+        self.pcb2.assignPageToBlock(0, 6)
+        self.pcb2.assignPageToBlock(7, 2)
+        self.pcb2.assignPageToBlock(2, 3)
+        self.pcb2.assignPageToBlock(5, 9)
+        self.assertTrue(self.pcb2.pageCorrespondingToBlock(6) == 0)
+        self.assertTrue(self.pcb2.pageCorrespondingToBlock(2) == 7)
+        self.assertTrue(self.pcb2.pageCorrespondingToBlock(3) == 2)
+        self.assertTrue(self.pcb2.pageCorrespondingToBlock(9) == 5)
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

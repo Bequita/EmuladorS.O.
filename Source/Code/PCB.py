@@ -32,6 +32,9 @@ class PCB(object):
     def inHardDisk(self, page):
         return self.pagesTable.inHD(page)
     
+    def pageCorrespondingToBlock(self, blockNumber):
+        return self.pagesTable.obtainPageWithBlock(blockNumber)
+    
 class PagesTable(object):
     
     def __init__(self):
@@ -55,4 +58,10 @@ class PagesTable(object):
     def inHD(self,page):
         tuplePage = self.pagesToBlock[page]
         return tuplePage[1] == 1
+    
+    def obtainPageWithBlock(self, blockNumber):
+        for key in self.pagesToBlock:
+            tuplePage = self.pagesToBlock[key]
+            if tuplePage[0] == blockNumber:
+                return key
     
