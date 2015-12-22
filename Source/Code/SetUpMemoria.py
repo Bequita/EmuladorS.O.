@@ -4,7 +4,7 @@ from Code.HardDisk import HardDisk
 from Code.Memory import Memory
 from Code.PCB import PCB
 
-class SetUpMixinMaty(object):
+class SetUpMemoria(object):
 
     def __init__(self):
         # Disco rigido

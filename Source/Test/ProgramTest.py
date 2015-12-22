@@ -1,12 +1,12 @@
 
 import unittest
 
-from Code.SetUpMixinMaty import SetUpMixinMaty
+from Code.SetUpMemoria import SetUpMemoria
 
 class ProgramTest(unittest.TestCase):
     
     def setUp(self):
-        self.setUpGeneral = SetUpMixinMaty()
+        self.setUpGeneral = SetUpMemoria()
     
     def test_programIsCalled(self):
         self.assertTrue(self.setUpGeneral.prg1.programName == 'PrimerPrograma')

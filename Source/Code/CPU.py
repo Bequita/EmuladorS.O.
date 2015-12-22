@@ -11,7 +11,7 @@ class CPU(object):
         self.pcbLoaded = None
         self.quantum = 0
         self.ticks= 4
-        self.counter=0
+        self.counter= 0
         self.mutex = Condition()
         self.kernel = systemComponents.kernel
         self.iOManager = systemComponents.iOManager
@@ -25,7 +25,7 @@ class CPU(object):
         if(self.quantum == 0 and self.pcbLoaded == None):
             self.kernel.modeSwitching()
             print("Nada para ejecutar")
-        elif(self.canExecute()):
+        if(self.canExecute()):
             print("CPU va a ejecutar el PCB")
             currentInstruction = self.fetch()
             self.executeCurrentInstruction(currentInstruction)
@@ -72,7 +72,8 @@ class CPU(object):
         elif(self.quantum == 0):
             self.interruptionManager.addInterruption(IRQ(self.pcbLoaded, IRQKind.TIMEOUT))
             self.pcbLoader = None
-        self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
+        else:
+            self.pcbLoaded.nextInstruction = self.pcbLoaded.nextInstruction + 1
                         
     def fetch(self):
         print("next instruction: " + self.pcbLoaded.nextInstruction.__str__())

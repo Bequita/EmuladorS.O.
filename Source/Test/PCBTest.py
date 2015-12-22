@@ -1,11 +1,11 @@
 import unittest
 
-from Code.SetUpMixinMaty import SetUpMixinMaty
+from Code.SetUpMemoria import SetUpMemoria
 
 class Test(unittest.TestCase):
 
     def setUp(self):
-        self.setUpGeneral = SetUpMixinMaty()
+        self.setUpGeneral = SetUpMemoria()
         self.pcb1 = self.setUpGeneral.pcb1
         self.pcb2 = self.setUpGeneral.pcb2
         self.pcb3 = self.setUpGeneral.pcb3

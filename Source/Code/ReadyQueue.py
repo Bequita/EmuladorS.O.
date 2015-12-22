@@ -3,7 +3,6 @@ Created on Sep 15, 2015
 
 @author: fernando
 '''
-import Queue
 
 class ReadyQueue:
     def __init__(self, estrategy):

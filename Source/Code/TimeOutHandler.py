@@ -18,5 +18,5 @@ class TimeOutHandler(object):
     def handle(self, irq):
         # Hace mutex de QReady, y mete el pcb dentro de la cola
         # self.kernel.timeOutRoutine(irq)
-        self.scheduler.addPcb(irq.getPcb())
+        self.scheduler.addPCB(irq.getPcb())
         print("ANDA EL TIMEOUT HANDLER")

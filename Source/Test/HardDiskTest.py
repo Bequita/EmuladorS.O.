@@ -1,11 +1,11 @@
 import unittest
 
-from Code.SetUpMixinMaty import SetUpMixinMaty
+from Code.SetUpMemoria import SetUpMemoria 
 
 class HardDiskTest(unittest.TestCase):
 
     def setUp(self):
-        self.suMixin = SetUpMixinMaty()
+        self.suMixin = SetUpMemoria()
         self.suMixin.hd.addProgram(self.suMixin.prg1)
         self.suMixin.hd.addProgram(self.suMixin.prg2)
 
